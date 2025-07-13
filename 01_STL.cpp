@@ -74,10 +74,11 @@ int main(){
                 //vec.erase(vec.at(3));                               //Don't works like this anyhow we will be using iterator as we have done in abv example
         
         //7. Insert :-
-                vec.insert(vec.begin()+2, 100);                       //will insert 100 at given index, here 2 is given as index with help of iterator
+                vec.insert(vec.begin()+2, 100);                       //will insert 100 at given index, here iterator is pointing at 2nd Index
 
         // Taking user input:- 
                 int a;
+                cin >> a;
                 vec.push_back(a);
 
 
@@ -167,6 +168,7 @@ int main(){
 //          * Can be push & pop from front & back both
 //          * Iterator works here too
 //          * .size(), .erase(), .clear(), begin, end, rbegin, rend(), insert, front, back    all these methods are also defined
+//          * can't use random accessing methods like l.at(4) or l[4] like we use to do in vectors as it's a linked list not an array.
 
 /*
 #include<iostream>
@@ -243,8 +245,8 @@ int main(){
 using namespace std;
 
 int main(){
-        pair<int, int> p = {3,4};                               //similary Pairs of Array or vector can also be created
-        pair<char, int> p2 = {'a',2};                           // Just pass array data type inside the PAIR
+        pair<int, int> p = {3,4};                         //Similary Pairs of Array or vector can also be created, Just pass array data type inside the PAIR
+        pair<char, int> p2 = {'a',2};                    
         pair<string, float> p3 = {"mili",0.1};
         pair<char, string> p4 = {'K',"Mili"};
 
@@ -261,7 +263,7 @@ cout<<endl;
 
         pair<int, pair<int,char>> p5 = {1, {2,'m'}};
         cout<<p5.first<<endl;
-       // cout<<p5.second<<endl;    //will throw error
+      // cout<<p5.second<<endl;                //will throw error
         cout<<p5.second.first<<" ";
         cout<<p5.second.second<<endl;
 
@@ -283,12 +285,14 @@ cout<<endl;
         cout<<"enter 2nd no of pair: ";
         cin>>b;
         vec.push_back({a,b});
+        // vec.emplace_back(a,b);     //this too will work
 
 
         // for(pair val : vec){          //can't print like this 
         //         cout<<val<<" ";
         // }
         // cout<<endl;
+
 
         for(pair<int,int> val : vec){
                 cout<<val.first<<" "<<val.second<<endl;
@@ -339,7 +343,7 @@ int main(){
         s.pop();                                        //top most element added at last will be removed
 
         stack<int> s2;
-        cout<<"initial size of S3: "<<s2.size()<<endl;
+        cout<<"initial size of S2: "<<s2.size()<<endl;
 
 //SWAP :- Swap elements of 2 stacks
         s2.swap(s);                        //all element of S will be swapped with S2
@@ -360,7 +364,7 @@ int main(){
 
 //Imp Loop used in Qs:-
         while(!s2.empty()){               //while stack is not empty
-                cout<<s2.top()<<endl;     //Print the topmost element
+                cout<<s2.top()<<endl;     //Print the topmost element i.e the element which was added at last
                 s2.pop();                 //And pop them out sequentially
         }
 
@@ -457,21 +461,21 @@ int main(){
 
 //Insert :-
         m.insert({"camera", 25});
-        //m.insert({"camera", 25},{"lens", 8});    //can't pass mustiple keys & value like this
+        //m.insert({"camera", 25},{"lens", 8});         //can't pass mustiple keys & value like this
 
 //Emplace :-
         m.emplace("toolkit", 90);
 
 //count :-
-        cout<<"count = "<<m.count("laptop")<<endl;    //returns 1 if the key exist and 0 if it doesn't
-        cout<<"laptop = " << m["laptop"]<<endl;
+        cout<<"count = "<<m.count("laptop")<<endl;      //returns 1 if the key exist and 0 if it doesn't
+        cout<<"laptop = " << m["laptop"]<<endl;         //return the value of this key "laptop"
 
 //Erase :- 
         m.erase("tv");
 
 //Find :-   
-        // map1.find(key)  :- Returns iterator to key or map1.end()   
-        // *(map1.find(key)) :- Dereferences the iterator (gives key-value pair)
+        // m.find(key)  :- Returns iterator to key or m.end() if key not found     {m.end() is a garbage value}
+        // *(m.find(key)) :- Dereferences the iterator (gives key-value pair)
 
         if(m.find("camera") != m.end()){
                 cout<<"found\n";
@@ -489,6 +493,29 @@ int main(){
 */
 
 
+// using find method of map data structure 
+/* 
+#include <iostream>
+#include <map>
+using namespace std;
+
+int main() {
+    map<int, string> map1;
+    map1[1] = "one";
+    map1[2] = "two";
+
+    auto it = map1.find(1);             // iterator of key "1" will be stored in 'it'
+    if (it != map1.end()) {
+        auto pair = *it;                // dereferencing the iterator 'it'
+        cout << pair.first << " " << pair.second << endl;
+    }
+
+    return 0;
+}
+ */
+
+
+
 
                                // 4A. Multi Map  :- Can have multiple keys
 /*
@@ -502,10 +529,10 @@ int main(){
         m.emplace("tv",100);                    // m["tv"] = 100; :- can't be done like this
         m.emplace("remote",1000);
         m.emplace("watch",10);
-        m.emplace("laptop",50);
-        m.emplace("AC",5);
-        m.emplace("AC",5);
-        m.emplace("AC",5);
+        m.insert({"laptop",50});
+        m.insert({"AC",5});
+        m.insert({"AC",5});
+        m.insert({"AC",5});
         m.emplace("tv",100);
         m.emplace("tv",80);
 
@@ -527,6 +554,57 @@ cout<<endl<<endl;
         }
 }
 */
+
+
+
+        // Erasing all the similar keys with specific value
+/* 
+#include<iostream>
+#include<map>
+using namespace std;
+int main()
+{
+        multimap<string, int> m;
+        m.emplace("remote",1000);
+        m.insert({"AC",5});
+        m.insert({"AC",5});
+        m.insert({"tv",80});
+        m.emplace("tv",100);
+        m.emplace("tv",80);
+
+
+        auto rangeAC = m.equal_range("AC");              // Get all elements with key "AC"
+
+        for (auto it = rangeAC.first; it != rangeAC.second; ++it) {
+                if (it->second == 5) {
+                        m.erase(it);
+                        break;                  // Only erase the first 1st matching
+                } 
+        }
+
+
+    // If you want to erase all entries with "TV" and value 80, use:
+        auto rangeTV = m.equal_range("tv");                                     // Get range of all elements with key "tv"
+
+        for (auto it = rangeTV.first; it != rangeTV.second; ) {
+                if (it->second == 80){                                          // it->second throws the value of "tv" key and check whether it's 80 or not               
+                        it = m.erase(it); // returns next valid iterator
+                }
+                else{
+                        ++it;
+                }
+        }
+// (it->second) throws the 2nd element of pair('it') using iterator,   it's iterator not value so can't use DOT(.) have to use arrow (->) 
+
+// Printing the map entities
+        for(auto p: m){
+                cout << p.first << " " << p.second <<endl;                     // p is not an iterator so using DOT(.)
+        }
+
+}
+ */
+
+
 
 
 
@@ -556,9 +634,10 @@ int main(){
 
 
 
+
                                 //5. SET
 //      * It also works as Tree internally similar to MAP
-//      * Insert, Emplace, Count, Erase    :- O(n) complexity
+//      * Insert, Emplace, Count, Erase    :- O(log n) complexity
 //      * Find, Size, Empty, Erase
 /*
 #include<iostream>
@@ -664,7 +743,7 @@ int main(){
 
                                                         // Algorithms
                                 
-                                //   1. SORTING :- by default it sorts inn ascending order
+                                //   1. SORTING :- by default it sorts in ascending order
 //Array
 /*
 #include<iostream>
@@ -683,7 +762,7 @@ int main(){
         }
         cout<<endl;
 
-        sort(arr, arr+8);
+        sort(arr, arr+8);               //need to pass iterator(pointer) only, here arr is pointer of 1st element  
         for(auto val: arr){
                 cout<<val<<" ";
         }
@@ -715,6 +794,7 @@ int main(){
 //      * Sorting function is based on intro sort :- combination of 3 sorting techniques (Quick Sort, Heap Sort, Insertion Sort)
 //      * Comparator is a function that tells the logic of comparision  
 //      * In Descending Order, we pass a comparator or functor
+//      * need to pass iterator(pointer) only
 /*
 #include<iostream>
 using namespace std;
@@ -722,7 +802,7 @@ using namespace std;
 int main(){
         vector<int> vec = {3,5,1,8,2};
 
-        sort(vec.begin(), vec.end(), greater<int>());          //this comparator tells which no is greater and data will be sorted accordingly
+        sort(vec.begin(), vec.end(), greater<int>());          //this comparator tells which number is greater and data will be sorted accordingly
 
         for(auto val:vec){
                 cout<<val<<" ";
@@ -816,7 +896,7 @@ int main(){
 
 
 
-                                        // 2. Reverse & ROTATE
+                                        // 2. REVERSE & ROTATE
 /*
 #include<iostream>
 using namespace std;
@@ -847,6 +927,13 @@ int main(){
         for(auto val:vec){
                 cout<<val<<" ";
         }
+
+
+        rotate(vec.begin(), vec.begin()+3, vec.end()-2);      //will place starting 3 elements before the 2nd last element{vec.end()-2}
+        cout<<"after rotate: ";
+        for(auto val:vec){
+                cout<<val<<" ";
+        }
 }
 */
 
@@ -855,6 +942,7 @@ int main(){
                                         // 3. Next/Prev Permutation
 /*
 #include<iostream>
+#include<algorithm>
 using namespace std;
 int main(){
         string s = "abc";
@@ -864,14 +952,18 @@ int main(){
         cout<<s<<endl;
         prev_permutation(s.begin(),s.end());
         cout<<s<<endl;
+cout<<endl<<endl;
 
-//Total perm.        :---  Not Working Check error 
-// int count = 0;
-// while(next_permutation(s.begin(),s.end()) != "abc"){
-//         cout<<s<<endl;
-//         count++;
-// }
-// cout<<count;
+//count total permutation & print them all 
+    sort(s.begin(), s.end());                   // Start with the first lexicographic permutation  {resets s back to "abc"}
+    int count = 0;
+
+    do {
+        cout << s << endl;
+        count++;
+    } while (next_permutation(s.begin(), s.end()) && s != "abc");
+
+    cout << "Total permutations: " << count << endl;
 }
 */
 
@@ -920,7 +1012,7 @@ int main()
 //The upper bound function returns an iterator that points to the first value that is greater than a specified value. 
 //The lower bound function returns an iterator that points to the first value that is equal to or greater than a specified value. 
 
-//lower_bound(v.begin(), v.end(), 4) returns an iterator pointing to the first element in the range [v.begin(), v.end()) that is not less than 4.
+//lower_bound(v.begin(), v.end(), 4) returns an iterator pointing to the first element in the range [v.begin(), v.end()) that is not less than 4(can be equal).
 //Subtracting v.begin() from this iterator gives the index of the first element that satisfies the condition.
 
 //upper_bound(v.begin(), v.end(), 4) returns an iterator pointing to the first element in the range [v.begin(), v.end()) that is greater than 4.
@@ -983,3 +1075,7 @@ int main()
         return 0;
 }
 */
+
+
+
+
