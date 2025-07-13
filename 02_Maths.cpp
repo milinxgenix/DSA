@@ -23,7 +23,7 @@ using namespace std;
 int main(){
     int n ;
     cin>>n;
-    int count = log10(n)+1;
+    int count = (int)(log10(n)+1);
     cout<<count;
 }
  */
@@ -83,6 +83,8 @@ int main() {
 
 //LeetC Q7
 /* 
+#include<climits>           // For INT_MAX and INT_MIN
+
 class Solution {
 public:
     int reverse(int x) {
@@ -99,11 +101,12 @@ public:
             rev = (rev*10) + digit;
       
         }
-        return rev;
-        
+        return rev;       
     }
-}; */
-
+}; 
+*/
+// INT_MAX is 2,147,483,647 → if rev > 214748364, multiplying by 10 will overflow.
+// INT_MIN is -2,147,483,648 → if rev < -214748364, multiplying by 10 will underflow.
 
 
 
@@ -191,8 +194,6 @@ public:
     }
 };
 */
-
-
 
 
 
@@ -303,7 +304,7 @@ int main()
     cin>>N;
     int n = N;
     int a = 0;
-    int digits = log10(N)+1;     //can find no of digits by converting to string also...   "int digit = to_string(n).length();"
+    int digits = log10(N)+1;        //can find no of digits by converting to string also...   "int digit = to_string(n).length();"
     while(n!=0){
         int r = n%10;
         a = pow(r,digits) + a;
@@ -433,11 +434,8 @@ int main() {
     cin >> n1 >> n2;
 
     for (int j = n1; j <= n2; j++) {
-        if (j < 2) {
-            cout << j << ",";           // 0 and 1 are not prime
-            continue;
-        }
-
+        if (j < 2) continue;           // 0 and 1 are not prime
+        
         bool isPrime = true;
         for (int i = 2; i * i <= j; i++) {
             if (j % i == 0) {
@@ -457,7 +455,7 @@ int main() {
 
 
 
-                                                            //10. Prime Factors
+                                                //10. Prime Factors
 /* 
 #include<iostream>
 #include<cmath>
