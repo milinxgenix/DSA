@@ -1,5 +1,10 @@
-                                                    //Recurrsion
-                                                    
+                                                    //Recursion
+/* 
+Note :- 
+    * In Back Tracking cout will be done always after Calling the recursive function {forms Recursive tree (stack)}.
+    * In Forward Recursion cout will be used before calling the recursive function.     
+*/
+
                                                     
                                                 //Reverse Count (n to 1)
 /* 
@@ -64,18 +69,18 @@ int main(){
 
 
 
-                                                        //Count between 2 integers (BACK TRACKING)
+                                        //Count between 2 integers (BACK TRACKING)
 /*
 #include<iostream>
 using namespace std;
 
-void func(int i, int n){
+void func(int i){
    
    // Base Condition.
    if(i<1) return;
    
    // Function call to print (n-1) integers.
-   func(i-1,n);
+   func(i-1);
    cout<<i<<endl;
 
 }
@@ -83,11 +88,10 @@ void func(int i, int n){
 int main(){
   int n;
   cin>>n;
-  func(n,n);
+  func(n);
   return 0;
 }
 */
-
 
 
 // Time Complexity: O(N) { Since the function is being called n times, and for each function, we have only one printable line that takes O(1) time, so the cumulative time complexity would be O(N) }
@@ -102,7 +106,7 @@ int main(){
 #include<iostream>
 using namespace std;
 int sum(int n){
-    if(n==0) return 0;                      //At sum(2) it will gives 2 + sum(1)  similarly  At sum(1) it gives 2+1+sum(0)  but At Sum(0) it directly returns 0 and stop calling the Sum() funt and recursion stops 
+    if(n==0) return 0;                      //Back Tracking :- At sum(2) it will gives 2 + sum(1)  similarly  At sum(1) it gives 2+1+sum(0)  but At Sum(0) it directly returns 0 and stop calling the Sum() funt and recursion stops 
     return n + sum(n-1);
 }
 int main(){
@@ -120,7 +124,7 @@ int main(){
 
 
                                             //Factorial
-// Parameterized way
+// Parameterized way :- Tail Recursion 
 /* 
 #include<iostream>
 using namespace std;
@@ -129,7 +133,7 @@ void fact(int i, int n){
         cout<<n;
         return;                    // if not return it will continue into loop again & again
     }
-    fact(i-1,n*i);
+    fact(i-1,n*i);                  // At i=0 it will return 1 instead of calling this recursive function
 }
 
 int main(){
@@ -141,7 +145,7 @@ int main(){
 
 
 
-//Fuctional way
+//Fuctional way :- Uses Back Tracking
 /*
 #include<iostream>
 using namespace std;
@@ -159,7 +163,7 @@ int main(){
 
 // Time Complexity: O(N) { Since the function is being called n times, and for each function, we have only one printable line that takes O(1) time, so the cumulative time complexity would be O(N) }
 // Space Complexity: O(N) { In the worst case, the recursion stack space would be full with all the function calls waiting to get completed and that would make it an O(N) recursion stack space }.
-// Iterative approach :- Time compl = O(n)  &   Space Complexity = O(1)
+// Iterative approach :- Time compl = O(n)  &   Space Complexity = O(1)   ✅
 
 
 
@@ -168,7 +172,7 @@ int main(){
 
                                                         //Reverse Array
 
-// without creating auxilary array using Recursion (RAW code, don't use)
+// without creating auxilary array, using Recursion (RAW code, don't use)
 /* 
 #include<iostream>
 using namespace std;
@@ -252,13 +256,13 @@ int main(){
 /* 
 #include<iostream>
 using namespace std;
-void rev(int i, int n, int arr[]) {
-    if (i >= n / 2) return;              // stop when i reaches middle
+void rev(int i, int n, int arr[]) {         // this is a void function which returns nothing, it just ,modifies the array by reversing it.
+    if (i >= n / 2) return;                 // stop when i reaches middle (Base Case, here return keyword is used to terminate the recursive funct.)
     swap(arr[i], arr[n - 1 - i]);
     rev(i + 1, n, arr);
 }
 int main(){
-    int i=0;                            //indexing will start from 0 always
+    int i=0;                                //indexing will start from 0 always
     int n;
     cin>>n;
     int arr[n];
@@ -280,12 +284,12 @@ int main(){
 #include <iostream>
 using namespace std;
 
-void rev(int arr[], int start, int end) {
+void rev(int arr[], int start, int end) {           // it's not always necessary to pass array's size 'n' while passing an array to a function.
     if (start < end) {
         swap(arr[start], arr[end]);
         rev(arr, start + 1, end - 1);
     }
-}
+}                                                   // This recursive function calls only & only if "start < end"} that means this part {"if (start >= end) return;"}  is Implicitly handled which we use to give as a base case in above program
 
 void printArray(int arr[], int n) {
     for(int i = 0; i < n; i++) {
@@ -298,13 +302,13 @@ int main() {
     int n;
     cin >> n;
 
-    int arr[n];  // Variable-Length Array (OK in GCC)
+    int arr[n];                         // Variable-Length Array (OK in GCC)
     for(int i = 0; i < n; i++) {
         cin >> arr[i];
     }
 
-    rev(arr, 0, n - 1);   // reverse array in-place
-    printArray(arr, n);   // print only once after complete reversal
+    rev(arr, 0, n - 1);                 // reverse array in-place
+    printArray(arr, n);                 // print only once after complete reversal
 }
  */
 
@@ -327,7 +331,7 @@ void printArray(int arr[], int n) {
 //Reverse array using library function
 void reverseArray(int arr[], int n) {
    //Reversing elements from index 0 to n-1 
-   reverse(arr, arr + n);
+   reverse(arr, arr + n);                            //As we kn array works as pointer also so arr is pointing to 0th index and arr+n pointing to the element coming after last element, so this built-in reverse funct includes the last element coming at (n-1)th index as it goes from reverse(arr, arr+n) ; arr+n is excluded but element at n-1 index is included.
 }
 
 int main() {
@@ -346,7 +350,7 @@ int main() {
 
 
 
-                                                    //Time-Space Complexity for Array Reversal
+                                        //Time-Space Complexity for Array Reversal
 
 // ITERATION   :-   Time comp = O(n)    &    Space Comp = O(n)
 // Two Pointer :-   Time comp = O(n)    &    Space Comp = O(1)
@@ -413,11 +417,11 @@ int main(){
 //To ignore spaces and case, modify the function like this:             //(LEET-C Q 125) :- Valid Palindrome
 /* 
 #include<iostream>
-#include<cctype>
+#include<cctype>                        // to use alphanumeric funct of C++ "isalnum()"
 using namespace std; 
 
 bool pal(string s){
-    string cleaned = "";
+    string cleaned = "";                //created a empty string of name "cleaned" to store the string without spaces & in lowercase
     for(char c : s){
         if(isalnum(c))                  // keep only letters and digits
             cleaned += tolower(c);
@@ -461,7 +465,7 @@ bool pal(int i, string s){
     }
 
     int n = cleaned.length();
-    if(i>=n/2) return true;      // Base Condition :- If i exceeds half of the string means all the elements are compared, we return true.
+    if(i>=n/2) return true;             // Base Condition :- If i exceeds half of the string means all the elements are compared, we return true.
 
     if(cleaned[i] != cleaned[n - 1 - i]){
         return false;
@@ -491,7 +495,7 @@ int main(){
 
 
 
-                                                        //Fibonnaci
+                                                    //Fibonnaci Series
 
 //Iterative Approach            Time comp = O(n)  &  Space comp = O(1)                                            
 /* 
@@ -499,16 +503,17 @@ int main(){
 #include<string>
 using namespace std;
 void fib(int n){
-    int a=0, b=1;
-    cout<<a<<" "<<b<<" ";
-    int temp;
-    for(int i=0; i<n-1; i++){
-        cout<<a+b<<" ";
-        temp = b;
-        b = a+b;
-        a = temp;
+    int a = 0, b = 1;
+    if (n >= 1) cout << a << " ";
+    if (n >= 2) cout << b << " ";
+    for (int i = 2; i < n; i++) {
+        int c = a + b;
+        cout << c << " ";
+        a = b;
+        b = c;
     }
 }
+
 int main()
 {
     int n;
@@ -516,7 +521,7 @@ int main()
     fib(n);
     return 0;
 } 
-*/
+ */
 
 
 //Recursive Approach        Time comp = O(2^n)  &  Space comp = O(n)
@@ -531,7 +536,7 @@ int fib(int n){
     if(n==1){
         return 1;
     }
-    return fib(n-1) + fib(n-2);
+    return fib(n-1) + fib(n-2);             //Here 2 recursive functions are called to time compl is 2^n
 }
 int main()
 {
@@ -546,14 +551,31 @@ int main()
 
 
 
+                                        // ✅ Optimized Alternatives for Fibonnaci series {Dynamic Programming}
+// 1. Memoization (Top-down DP):
+/*
+int fib(int n, vector<int>& dp) {
+    if (n <= 1) return n;
+    if (dp[n] != -1) return dp[n];
+    return dp[n] = fib(n-1, dp) + fib(n-2, dp);
+}
+*/
+// Time: O(n)
+// Space: O(n) (recursion + memo array)
 
 
-// vid lect from 3,4,5  to analysis the time space comp
-// revise recursion & Maths
+//2. Tabulation (Bottom-up DP):
+/*
+int fib(int n) {
+    vector<int> dp(n+1);
+    dp[0] = 0, dp[1] = 1;
+    for(int i = 2; i <= n; i++)
+        dp[i] = dp[i-1] + dp[i-2];
+    return dp[n];
+}
+*/
+// Time: O(n)
+// Space: O(n)
 
 
-
-
-
-
-
+// 3. Space-Optimized Iterative :-  Time: O(n) & Space: O(1)     {Code already written somewhere above}
