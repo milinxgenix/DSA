@@ -167,7 +167,7 @@ int main(){
 //          * Implemented & work as Doubly Linked List
 //          * Can be push & pop from front & back both
 //          * Iterator works here too
-//          * .size(), .erase(), .clear(), begin, end, rbegin, rend(), insert, front, back    all these methods are also defined
+//          * .size(), .erase(), .clear(), .begin(), .end(), .rbegin(), .rend(), .insert(), .front(), .back()    all these methods are also defined
 //          * can't use random accessing methods like l.at(4) or l[4] like we use to do in vectors as it's a linked list not an array.
 
 /*
@@ -269,7 +269,7 @@ cout<<endl;
 
 
 
-                                                        // VECTOR of PAIRs :-
+                                                // VECTOR of PAIRs :-
 
         vector<pair<int,int>> vec = {{1,2}, {2,3}, {5,6}};
 
@@ -285,16 +285,16 @@ cout<<endl;
         cout<<"enter 2nd no of pair: ";
         cin>>b;
         vec.push_back({a,b});
-        // vec.emplace_back(a,b);     //this too will work
+        // vec.emplace_back(a,b);       //this too will work
 
 
-        // for(pair val : vec){          //can't print like this 
+        // for(pair val : vec){         //can't print like this 
         //         cout<<val<<" ";
         // }
         // cout<<endl;
 
 
-        for(pair<int,int> val : vec){
+        for(pair<int,int> val : vec){                              // Can use 'auto' also :- for(auto val : vec)
                 cout<<val.first<<" "<<val.second<<endl;
         }
         cout<<endl;
@@ -405,7 +405,7 @@ int main(){
 
 
 
-                                                                //3. Priority Queue
+                                                        //3. Priority Queue
 //      * push, emplace, top, pop, size, empty
 /*
 #include<iostream>
@@ -510,6 +510,12 @@ int main() {
         cout << pair.first << " " << pair.second << endl;
     }
 
+
+//     if (auto it = map1.find(1); it != map1.end()) {                   //Same above thing can be done like this also 
+//         cout << it->first << " " << it->second << endl;
+//     }
+
+
     return 0;
 }
  */
@@ -588,7 +594,7 @@ int main()
 
         for (auto it = rangeTV.first; it != rangeTV.second; ) {
                 if (it->second == 80){                                          // it->second throws the value of "tv" key and check whether it's 80 or not               
-                        it = m.erase(it); // returns next valid iterator
+                        it = m.erase(it);             // returns next valid iterator
                 }
                 else{
                         ++it;
