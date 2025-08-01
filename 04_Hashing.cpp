@@ -333,10 +333,12 @@ int main()
 
 
 
+                                                            //  LEET CODES 
 
 
 
-                                    // LEET-C Q1 (TWO SUM)
+
+                                                            // LEET-C Q1 (TWO SUM)
 /*
 #include<iostream>
 #include<unordered_map>
@@ -382,7 +384,53 @@ vector<int> two_sum(vector<int>& nums, int target){
 
 
 
-/*                            LeetC - 41  (have to solve again ; hashmap can't be used it requires const space)
+
+
+                                                            //LeetC - 41
+
+// Note :
+/*
+    * Hashmap can't be used it requires const space O(1)
+    * Time - O(n) so can't do sorting but can do linear search
+    * Unsorted - can't use binary search to find max element
+    * Space - O(1) const space so can't use any data structure or recursion to store elements
+*/
+
+
+            // Brute Force:   Time = O(n^2)  and  Space = O(1) 
+/*
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        // int Max = nums[0];
+        // for(int i=1; i<nums.size(); i++){
+        //     if(nums[i]>Max){
+        //         Max = nums[i];
+        //     }
+        // }
+
+        int Max = *max_element(nums.begin(), nums.end());
+
+        for (int i = 1; i <= Max + 1; i++) {
+        bool found = false;
+            for (int j = 0; j < nums.size(); j++) {
+                if (nums[j] == i) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return i;
+        }
+        return -1;
+    }
+};
+*/
+
+
+
+
+            // HashMAP :     Time : O(n)  &  Space : O(n)
+/*
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
@@ -395,19 +443,62 @@ public:
             }
         }
 
-        int max_key = 0;
-        for(auto p : m){
-            if(p.first>max_key){
-                max_key = p.first;
-            }
-        }
-
-        for(int i=1; i<max_key; i++){
-            if(m.find(i) == m.end()){
+        int i = 1;
+        while(true){
+            if(m.find(i)==m.end()){
                 return i;
             }
+            i++;
         }
-        return max_key + 1;
+
+
+// No Need to use max key we can iterate through the map in above mentioned manner also 
+        // int max_key = 0;
+        // for(auto p : m){
+        //     if(p.first>max_key){
+        //         max_key = p.first;
+        //     }
+        // }
+
+        // for(int i=1; i<max_key; i++){
+        //     if(m.find(i) == m.end()){
+        //         return i;
+        //     }
+        // }
+        // return max_key + 1;
+    }
+};
+*/
+
+
+
+    //  INDEX REPLACEMENT METHOD (In-Place method for const space use)    
+// Optimal Soln :     Time = O(n)   space = O(1)        
+/*
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+            int n = nums.size();
+            int i = 0;
+
+            while (i < n) {     
+                if (nums[i] > 0 && nums[i] <= n) {                      // Only swap if nums[i] is in the range [1, n]
+                    int correctIndex = nums[i] - 1;                     // Only compute correctIndex if nums[i] is in range
+                    if (nums[i] != nums[correctIndex]) {                // Don't swap if already in correct position
+                        swap(nums[i], nums[correctIndex]);
+                        continue;
+                    }
+                }
+                i++;                                                    // iterate i if any of the conditions is voilated
+            }
+
+            // Find first index where value is not index+1
+            for (int i = 0; i < n; i++) {
+                if (nums[i] != i + 1) return i + 1;
+            }
+ 
+            return n + 1;
+
     }
 };
 */
@@ -416,45 +507,90 @@ public:
 
 
 
+                                        //    LEET-C -> 2367 (Sum of 3riplets)   :- similar to LeetC-1 (2 sum)
 
-                                                //LeetC - 1838    (WRONG)
-// #include<iostream>
-// #include<string>
-// #include<unordered_map>
-// #include<climits>
-// #include<vector>
+// Brute Force :              Time - O(n^3)   space - O(1)               As per given contraints, brute force is also applicable
+/*
+class Solution {
+public:
+    int arithmeticTriplets(vector<int>& nums, int diff) {
+        int count = 0;
+        int n = nums.size();
+        for(int i = 0; i < n; i++) {
+            for(int j = i + 1; j < n; j++) {
+                if(nums[j] - nums[i] == diff) {
+                    for(int k = j + 1; k < n; k++) {
+                        if(nums[k] - nums[j] == diff) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
 
-// using namespace std;
-// int main()
-// {
+    }
+};
+*/
 
-//     vector<int> nums = {1,1,1,4,8,13};
 
-//     int k;
-//     cin>>k;
 
-//     unordered_map<int, int> m;
-//             for(int i=0; i<nums.size(); i++){
-//             m[nums[i]]++;
-//         }
+            // Unordered HashMap      Time - O(log(n))    space - O(n)
+/* 
+#include<unordered_map>
+class Solution {
+public:
+    int arithmeticTriplets(vector<int>& nums, int diff) {
+        int count = 0;
+        int n = nums.size();
+        unordered_map<int,int> m;
 
-//     int Max_value = INT_MIN;
+        for(int v : nums){
+            m[v]++;
+        }
 
-//         for(auto& p:m){
-//             for(int i=k; i>=1; i--){
-//                 if(i<p.first){
-//                     int a = p.first - i;
-//                     if(m.find(a) != m.end()){
-//                         int X = min((k/i),m[a]);
-//                         p.second = p.second+ X;
-//                     }
-//                 }
-//             }
+        for(int i=0; i<n; i++){
+            int x = nums[i] + diff;
+            int y = nums[i] + (2*diff);
 
-//             if(p.second>Max_value){
-//                 Max_value = p.second;
-//             }
-//             cout<<p.first<<"->"<<p.second<<endl;
-//         }
-                
-// }
+            if(m.find(x) != m.end() && m.find(y) != m.end()){
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
+*/
+
+
+
+
+            // Hash Set :-              Time - O(log(n))   Space - O(n)
+            
+// * No need to track index value so better to use HashSet rather than HashMap
+// * More space efficient than HashMap as it stores key only and map stores key,value pair 
+// * In Q1 (2-Sum) we need to return incides so we tracked it using Hash-Map but here we just asked to find the counts so no need to track indices so using Hash-Set
+/* 
+#include<unordered_set>
+class Solution {
+public:
+    int arithmeticTriplets(vector<int>& nums, int diff) {
+        int countt = 0;
+        unordered_set<int> S(nums.begin(), nums.end());
+
+        for (int num : nums) {
+            if (S.count(num + diff) && S.count(num + 2 * diff)) {
+                countt++;
+            }
+        }
+
+        return countt;
+
+    }
+};
+ */
+
+
+
+
