@@ -417,7 +417,7 @@ Check wrap-around:
 
 
 
-                                // 4. Remove Duplicates in-place from Sorted Array
+                                // 4. Remove Duplicates in-place from SORTED Array
 
 // Brute-Force :- Didn't use In-Place  tech   Time:- O(n)  Space :- O(n)
 /*
@@ -542,7 +542,7 @@ int main()
     }
 
     int n = v.size();
-    int temp[n];                   // Created extra array (don't create vector as "temp[i-1] = v[0]" not possible in vector)
+    int temp[n];                   // Created extra array (don't create vector, As "temp[i-1] = v[0]" not possible in vector)
     for(int i=1; i<n; i++){
         temp[i-1] = v[i];
     }
@@ -628,7 +628,7 @@ int main()
 
 
                                     // 6. Rotate an array by D places in either Left/Right
-// Bruteforce :- T - O(n^2)     S - O(1)
+// Bruteforce :- T - O(n*k)     S - O(1)
 /*
 #include<iostream>
 #include<string>
@@ -723,7 +723,7 @@ int main()
         temp[i] = v[i];
     }
 
-    for(int i=k; i<n; i++){             // Left Shifting elements by 'K'
+    for(int i=k; i<n; i++){             // Left Shifting remaining elements by 'K'
         v[i-k] = v[i]; 
     }
 
@@ -953,14 +953,14 @@ public:
         int n = nums.size();
         k = k % n; // Ensure k is within the range [0, n)
 
-        // Reverse the entire array
-        reverse(nums.begin(), nums.end());
-        
         // Reverse the first k elements
         reverse(nums.begin(), nums.begin() + k);
         
         // Reverse the rest of the elements after k
         reverse(nums.begin() + k, nums.end());
+
+        // Reverse the entire array
+        reverse(nums.begin(), nums.end());
     }
 }; 
 */
@@ -980,3 +980,776 @@ public:
     }
 };  
 */
+
+
+
+
+                                                // 7. Move Zeros to end
+
+// Brute Force          T - O(n^2)      S - O(n)                {Nested Loops}
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void shiftZero(vector<int> nums){
+    for(int i=0; i<nums.size(); i++){
+        for(int j=i+1; j<nums.size(); j++){
+            if(nums[i]==0 && nums[j]!=0){
+                swap(nums[i],nums[j]);
+            }
+        }
+    }
+    for(int i:nums){
+        cout<<i<<" ";
+    }
+}
+int main()
+{
+    vector<int> nums;
+    cout<<"Enter any negative element to stop taking input: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    shiftZero(nums);
+    return 0;
+}  
+ */
+
+
+
+
+// Brute Force          T - O(2*n)      S - O(n)                      {Auxiliary Vector}
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void shiftZero(vector<int> nums){
+    vector<int> v;
+
+    for(int i=0; i<nums.size(); i++){
+        if(nums[i]!=0){
+            v.push_back(nums[i]);
+        }
+    }
+
+    for(int i=v.size(); i<nums.size(); i++){
+        v.push_back(0);
+    }
+
+    for(int i=0; i<nums.size(); i++){
+        cout<<v[i];
+    }
+}
+
+int main()
+{
+    vector<int> nums;
+    cout<<"Enter any negative element to stop taking input: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    shiftZero(nums); 
+    
+    return 0;
+}
+ */
+
+
+
+
+//  Optimal Approach         T - O(n)        S - O(1)                   {Two Pointer}
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void shiftZero(vector<int> nums){
+    int i=0;
+    for(int j=1; j<nums.size(); j++){
+        if(nums[i]==0 && nums[j]!=0){
+            swap(nums[i],nums[j]);
+            i++;
+        }
+        else if(nums[i]!=0){
+            i++;
+        }
+    }
+
+        for(int i:nums){
+        cout<<i<<" ";
+    }
+}
+
+int main()
+{
+    vector<int> nums;
+    cout<<"Enter any negative element to stop taking input: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    shiftZero(nums);
+    return 0;
+}  
+*/
+
+
+
+                                            // Leet-C   Q-283   {Move Zeroes}
+
+// Two Pointer      -- More simplified Syntax
+/* 
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int i = 0;
+        for(int j=0; j<nums.size(); j++){
+            if(nums[j]!=0){
+                swap(nums[j],nums[i]);
+                i++;
+            }
+        }  
+    }
+}; 
+*/
+
+
+
+
+                                                // 8. Linear Search in C
+//          T - O(n)    S - O(1)
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+int searchElement(vector<int> nums, int k){
+    for(int i=0; i<nums.size(); i++){
+        if(nums[i] == k){
+            return i;
+           // break;                // No matters we put break or not it will return the 1st found index of 'k' only
+        }
+    }
+    return -1;
+}
+int main()
+{
+    cout<< "enter num to be find: ";
+    int k;
+    cin>>k;
+    cout<<endl;
+    vector<int> nums;
+    cout<<"Enter any negative element to stop taking input: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    cout<<searchElement(nums,k);
+    return 0;
+    return 0;
+} 
+ */
+
+
+
+
+                                        // 9. Union of Two Sorted Arrays
+
+//  Optimal approach : 2-Pointer (Merge Algo)      T - O((n + m) log(n + m))      S - O(n + m)
+/* 
+#include<iostream>
+#include<set>
+using namespace std;
+void unionArr(vector<int> nums, vector<int> mums){
+    int np = 0;
+    int mp = 0;
+
+    set<int> temp;                                      // Created SET instead of Vector to store unique elements   
+    while(np<nums.size() && mp<mums.size()){
+        if(nums[np]<=mums[mp]){
+            //if(temp.size() == 0 || temp.back() != nums[np]){          // No need to use this as have used set temp instead of vector temp   {this condition avoids duplicates within same array}                         
+                temp.insert(nums[np]);
+                np++;
+            //}
+        }
+
+        // else if(nums[np]==mums[mp]){                 // No need of this as we have created a SET     {this condition avoids same elements in both array}
+        //     temp.insert(nums[np]);
+        //     np++;
+        //     mp++;
+        // }
+
+        else{
+            temp.insert(mums[mp]);
+            mp++;
+        }
+    }
+    while(np<nums.size()){
+        temp.insert(nums[np]);
+        np++;       
+    }
+    while(mp<mums.size()){
+        temp.insert(mums[mp]);
+        mp++;       
+    }
+
+    for(int i:temp){
+        cout<<i<<" ";
+    }
+}
+int main()
+{
+    vector<int> nums;
+    vector<int> mums;
+
+    cout<<"enter elements for 1st array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    cout<<endl;
+    cout<<"enter elements for 2nd array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        mums.push_back(x);
+    }    
+
+    unionArr(nums,mums);
+    return 0;
+} 
+*/
+// If used SET then T - O((n + m) log(n + m))  else if using those commented conditions T - O(m+n)
+
+
+
+
+// SET {Works for UNSORTED arrays also}       T - O((m+n)log(m+n))      S - O(m+n)
+/* 
+#include<iostream>
+#include<set>
+using namespace std;
+void unionArr(const vector<int>& nums, const vector<int>& mums) {
+    set<int> s;
+    for (int num : nums) {                  T - O(n*logn)       Insertion time comp
+        s.insert(num);
+    }
+    for (int mum : mums) {                  T - O(m*logm)
+        s.insert(mum);
+    }
+
+    for (int i : s) {
+        cout << i << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    vector<int> nums;
+    vector<int> mums;
+
+    cout<<"enter elements for 1st array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    cout<<endl;
+    cout<<"enter elements for 2nd array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        mums.push_back(x);
+    }    
+
+    unionArr(nums,mums);
+    return 0;
+} 
+*/
+
+
+
+
+// Map  {Works for UNSORTED arrays also}         T - O((m+n) * log(m+n))          S - O(m+n)  
+/*
+#include<iostream>
+#include<map>
+#include<vector>
+using namespace std;
+vector<int> FindUnion(int arr1[], int arr2[], int n, int m) {
+
+  map<int, int>freq;
+  vector<int>Union;
+
+  for (int i = 0; i < n; i++) freq[arr1[i]]++;
+
+  for (int i = 0; i < m; i++) freq[arr2[i]]++;
+
+  for (auto & it: freq)
+    Union.push_back(it.first);              // map takes unique keys
+  return Union;
+}
+
+int main() {
+  int n = 10, m = 7;
+  int arr1[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int arr2[] = {2, 3, 4, 4, 5, 11, 12};
+  vector < int > Union = FindUnion(arr1, arr2, n, m);
+  cout << "Union of arr1 and arr2 is " << endl;
+  for (auto & val: Union)
+    cout << val << " ";
+  return 0;
+}
+*/
+
+
+
+
+// Built-IN Functions {No Use}          T - O(n+m)          S - O(n+m)
+/* 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void unionArr(vector<int> nums, vector<int> mums) {
+
+    // // 1. Sort both arrays (if not already sorted)           T - O(n log n + m log m)   if arrays are not already sorted  
+    // sort(nums.begin(), nums.end()); 
+    // sort(mums.begin(), mums.end());
+
+    // 2. Remove duplicates within each array
+    nums.erase(unique(nums.begin(), nums.end()), nums.end());
+    mums.erase(unique(mums.begin(), mums.end()), mums.end());
+
+    // 3. Allocate space for result
+    vector<int> result(nums.size() + mums.size());                    // max possible size of union vector  {need to assign size to use .begin() function}
+
+    // 4. Compute union
+    auto it = set_union(
+        nums.begin(), nums.end(),
+        mums.begin(), mums.end(),
+        result.begin()
+    );
+
+    // 5. Resize and print
+    result.resize(it - result.begin());
+
+    cout << "Union: ";
+    for (int i : result) {
+        cout << i << " ";
+    }
+    cout << endl;
+}
+int main()
+{
+    vector<int> nums;
+    vector<int> mums;
+
+    cout<<"enter elements for 1st array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    cout<<endl;
+    cout<<"enter elements for 2nd array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        mums.push_back(x);
+    }    
+
+    unionArr(nums,mums);
+    return 0;
+} 
+*/
+
+
+
+
+
+                                    // 10. Intersection of 2 sorted Arrays
+
+// Nested loops     T - O(n*m)    S - O(k)   {k is common elements}                                
+/* 
+// Brute Force :
+#include<iostream>
+#include<string>
+using namespace std;
+void interArr(vector<int>& nums, vector<int>& mums){
+    vector<int> temp;
+    vector<bool> visited(mums.size(), false);               // boolean vector of the same size as mums, initialized with false, used to track which elements in mums have already been matched
+
+    for(int i = 0; i<nums.size(); i++) {
+        for(int j = 0; j<mums.size(); j++) {
+            if(nums[i] == mums[j] && !visited[j]) {
+                temp.push_back(nums[i]);
+                visited[j] = true;                          // marks mums[j] as used so it won’t be matched again, this boolian vector stores true/false for each value of 'j'
+                break;                                      // stops further checking for the current nums[i], and moves to the next i
+            }
+
+        }
+    }
+
+    for(int val : temp) {
+        cout << val << " ";
+    }
+}
+
+int main()
+{
+    vector<int> nums;
+    vector<int> mums;
+
+    cout<<"enter elements for 1st array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    cout<<endl;
+    cout<<"enter elements for 2nd array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        mums.push_back(x);
+    }    
+
+    interArr(nums,mums);    
+    return 0;
+}
+ */
+
+
+
+// Two Pointers -->        T - O(n+m)      S - O(K)  {K= no. of common elements}
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void interArr(vector<int>& nums, vector<int>& mums){
+    vector<int> temp;
+    int i = 0, j = 0;
+
+    while(i < nums.size() && j < mums.size()){
+        if(nums[i] == mums[j]){
+            temp.push_back(nums[i]);
+            i++;
+            j++;
+        }
+        else if(nums[i] < mums[j]){
+            i++;
+        }
+        else{                                   // nums[i] > mums[j]
+            j++;
+        }
+    }
+
+    for(int val : temp){
+        cout << val << " ";
+    }
+}
+
+int main()
+{
+    vector<int> nums;
+    vector<int> mums;
+
+    cout<<"enter elements for 1st array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        nums.push_back(x);
+    }
+
+    cout<<endl;
+    cout<<"enter elements for 2nd array and to stop enter any negative element: ";
+    while(true){
+        int x;
+        cin>>x;
+        if(x<0){
+            break;
+        }
+        mums.push_back(x);
+    }    
+
+    interArr(nums,mums);
+    return 0;   
+} 
+*/
+
+
+
+                                        // Intersection of two UNSORTED array
+
+// Optimal Approach :-  HashMap handles unsorted Arrays         T - O(n + m)       S - O(n) 
+/* 
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+using namespace std;
+
+void interArr(vector<int>& nums, vector<int>& mums) {
+    unordered_map<int, int> freq;                           // store element counts from nums
+    vector<int> result;
+
+    // Step 1: Store frequency of nums[] elements
+    for(int num : nums) {
+        freq[num]++;
+    }
+
+    // Step 2: Find intersection
+    for(int a : mums) {
+        if(freq[a] > 0) {                                   // element of mums found in nums
+            result.push_back(a);
+            freq[a]--;                                      // reduce freq to avoid reuse
+        }
+    }
+
+    // Step 3: Print result
+    for(int val : result) {
+        cout << val << " ";
+    }
+}
+
+int main() {
+    vector<int> nums, mums;
+    int x;
+
+    cout << "Enter elements for 1st array (negative to stop): ";
+    while(true) {
+        cin >> x;
+        if(x < 0) break;
+        nums.push_back(x);
+    }
+
+    cout << "Enter elements for 2nd array (negative to stop): ";
+    while(true) {
+        cin >> x;
+        if(x < 0) break;
+        mums.push_back(x);
+    }
+
+    interArr(nums, mums);
+    return 0;
+} 
+*/
+
+
+
+
+
+
+                                        // 11. Missing Number leetC - 286
+
+// Brute Force :    Using nested loops      T - O(n^2)      S - O(1)                {Can also find more than 1 missings}
+
+// Sorting :        T - O(nlogn)      S - O(1)                                      {Can also find more than 1 missings}
+/* 
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());             T - N(logN)
+
+        for(int i=0; i<n; i++){                     T - N   
+            if(i != nums[i]){
+                return i;
+            }
+        }
+        return n;
+    }
+}; 
+*/
+// Total time comp :- O(N) + O(NlogN) = O(NlogN) 
+
+
+
+// Mapp :                   T - O(n logn)       S - O(n)                     {Can also find more than 1 missings}
+/* 
+#include<map>
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        map<int,int> m;
+        for(int i=0; i<n; i++){                         // storing :- O(nlogn)
+            m[nums[i]]++;
+        }
+        for(int i=0; i<n; i++){
+            if(m.find(i)==m.end()){                     // fetching using find fn :- O(nlogN)
+                return i;
+            }
+        }
+        return n;
+    }
+}; 
+*/
+
+
+
+// Hashing :                    T - O(2*n)     S - O(n)                         {Can also find more than 1 missings}
+/* 
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> hash(n + 1, 0);         // hashing should always be kept array.size() + 1           
+
+        for (int i = 0; i < n; i++) {       // T - O(n)
+            hash[nums[i]] = 1;              // mark presence
+        }
+
+        for (int i = 0; i <= n; i++) {      // check up to n        T - O(n)
+            if (hash[i] == 0) {
+                return i;
+            }
+        }
+        return -1;                          // should not reach here
+    }
+};
+ */
+
+
+
+ // Optimal Approach 1 :        Summation Approach   T - O(n)   S - O(1)        {Easiest}   {find only if single number is missing}
+/*  
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        for(int i=0; i<n; i++){             // sum of all array elements
+            sum = sum + nums[i];
+        }
+        int Tsum = (n*(n+1))/2;             // sum of all numbers upto 'n'
+        return Tsum - sum;                  // missing number = (sum of all numbers)  - (sum of all array elements) 
+    }
+}; 
+*/
+
+
+
+// Optimal Approach 1 :        XOR Approach   T - O(n)   S - O(1)               {find only if single number is missing}
+/* 
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int xorAll = 0, xorNums = 0;
+
+        for (int i = 0; i < n; i++) {
+            xorAll ^= i;                    // XOR from 0 to n-1 here
+            xorNums ^= nums[i];             // XOR of all elements of array
+        }
+        xorAll ^= n;                        // include XOR of 'N'
+        return xorAll ^ xorNums;
+    }
+}; 
+*/
+
+
+
+
+
+                                            // 12. Max Consecutive Ones {LeetC-485}
+
+// Optimal Soln         T-O(n)      S- O(1)
+/* 
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+        int n = nums.size();
+        int flag = 0;
+        int flag2 = 0;
+        for(int i=0; i<n; i++){
+            if(nums[i]==1){
+                flag++;
+                }
+            if(nums[i]==0){
+                flag = 0;
+            }
+            flag2 = max(flag2,flag);
+        }
+        return flag2;
+    }
+}; 
+*/
+
+
+
+
+                                        // 13. Single Number  {LeetC - 136}
+// Linear runTime O(n)      constant space O(1)
+/*                  
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int n = nums.size();
+        int xOr = 0;                  //can't take xor as variable name
+        for(int i=0; i<n; i++){
+            xOr = xOr ^ nums[i];
+        }
+        return xOr;
+    }
+}; */
+
+//Other approaches :- 
+//  * BruteForce - nested loops    T{O(n^2)}                S{O(1)}
+//  * Hashing -                    T{O(N)+O(N)+O(N)}        S{O(maxEle + 1)}
+//  * Map     -                    T{O(N*logM) + O(M)}      S{O(M)}                 ; m is size of map
+//  * XOR     -                    T{O(n)}                  S{O(1)}
