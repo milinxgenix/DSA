@@ -287,7 +287,7 @@ using namespace std;
     }
 
     void DivSort(int arr[], int low, int high){
-        if(low>=high) return;                                       // Call break
+        if(low>=high) return;                                       // Call break : Single element
 
         int mid = (low+high)/2;                                     // mid will be the index of last element of 1st part of array 
 
@@ -537,7 +537,7 @@ class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         vector<int> temp;
-        int i = 0, j = 0;       // Don't take i = nums[0] or j = nums[0] as it could be empty array also
+        int i = 0, j = 0;                               // Don't take i = nums[0] or j = nums[0] as it could be empty array also
 
         while(i < nums1.size() && j < nums2.size()){
             if(nums1[i] < nums2[j]) temp.push_back(nums1[i++]);         
@@ -548,7 +548,7 @@ public:
         while(j < nums2.size()) temp.push_back(nums2[j++]);
 
         int k = temp.size();
-        if(k == 0) return 0.0;     // if both r Empty array
+        if(k == 0) return 0.0;                          // if both r Empty array
 
         if(k % 2 == 0)
             return (temp[k / 2 - 1] + temp[k / 2]) / 2.0;
@@ -556,4 +556,4 @@ public:
             return temp[k / 2];
     }
 };
-*/                                  // Refer Mergesort code for merging function 
+*/                                                      // Refer Mergesort code for merging function 

@@ -12,8 +12,8 @@ Note :-
 using namespace std;
 
 void printt(int n){
-    if(n<1) return;
-    cout<<n<<endl;                      // Cout is used before calling the recursive function :- Forward Recursion
+    if(n<1) return;                      // Base Case
+    cout<<n<<endl;                       // Cout is used before calling the recursive function :- Forward Recursion
     printt(n-1);
 }
 
@@ -314,7 +314,7 @@ int main() {
 
 
 
-// Using library function (New Approach)
+// Using library function (New Approach)   :-   reverse() is just a well-optimized two-pointer loop.
 /*
 #include <iostream>
 #include<algorithm>
@@ -347,7 +347,6 @@ int main() {
    return 0;
 } 
 */
-
 
 
                                         //Time-Space Complexity for Array Reversal
@@ -414,7 +413,8 @@ int main(){
 
 
 
-//To ignore spaces and case, modify the function like this:             //(LEET-C Q 125) :- Valid Palindrome
+                                            //(LEET-C Q 125) :- Valid Palindrome
+//To ignore spaces and case, modify the function like this:   
 /* 
 #include<iostream>
 #include<cctype>                        // to use alphanumeric funct of C++ "isalnum()"
@@ -447,6 +447,31 @@ int main(){
     }
 } 
  */
+
+
+
+
+// More Optimal :- Optimised Space also                 T - O(n)      S - O(1)
+/* 
+class Solution {
+public:
+    bool isPalindrome(string s) {
+       int start=0;
+       int end=s.size()-1;
+       while(start<=end){
+           if(!isalnum(s[start])){start++; continue;}                       //If the start character is not a letter or digit, skip it
+           if(!isalnum(s[end])){end--; continue;}                           //continue restarts the loop without doing the comparison 
+           if(tolower(s[start])!=tolower(s[end]))return false;              // compare alphanum keys, after converting to lowercase 
+           else{                                                            
+               start++;                                                     // if start and end matched then move inwards for next match
+               end--;
+           }
+       }
+       return true;
+}
+}; 
+*/
+
 
 
 
@@ -488,24 +513,25 @@ int main(){
 
 
 // Functional Approach :-    Time Comp = O(n)    &    Space Comp = O(n)
-// Iterative Approach  :-    Time Comp = O(n)    &    Space Comp = O(1)
+// Iterative Approach  :-    Time Comp = O(n)    &    Space Comp = O(1)             {Two Pointer}
 // Recursive Approach  :-    Time Comp = O(n)    &    Space Comp = O(n)
 
 
 
 
 
-                                                    //Fibonnaci Series
+                                                    //Fibonnaci Series -> LeetC - 509
 
-//Iterative Approach            Time comp = O(n)  &  Space comp = O(1)                                            
+//Iterative Approach            Time comp = O(n)  &  Space comp = O(1)          ✅   best soln                                          
 /* 
 #include<iostream>
 #include<string>
 using namespace std;
 void fib(int n){
+    if (n >= 1) cout << 0 << " ";           // for any number greater than 1 it will print 0 first
+    if (n >= 2) cout << 1 << " ";           // // for any number greater than 2 it will print 0 first then will print 1 
+                                            // above 2 lines make the series start with 0,1 always
     int a = 0, b = 1;
-    if (n >= 1) cout << a << " ";
-    if (n >= 2) cout << b << " ";
     for (int i = 2; i < n; i++) {
         int c = a + b;
         cout << c << " ";
@@ -513,7 +539,6 @@ void fib(int n){
         b = c;
     }
 }
-
 int main()
 {
     int n;
@@ -522,6 +547,7 @@ int main()
     return 0;
 } 
  */
+
 
 
 //Recursive Approach        Time comp = O(2^n)  &  Space comp = O(n)
@@ -536,13 +562,13 @@ int fib(int n){
     if(n==1){
         return 1;
     }
-    return fib(n-1) + fib(n-2);             //Here 2 recursive functions are called to time compl is 2^n
+    return fib(n-1) + fib(n-2);             //Here 2 recursive functions are called so time compl is 2^n
 }
 int main()
 {
     int n;
     cin>>n;
-    for(int i=0; i<=n; i++){
+    for(int i=0; i<=n; i++){                // loop to print the whole series instead of printing single fibonacci number of 'N'
         cout<<fib(i)<<" ";  
     }
     return 0;
@@ -551,7 +577,7 @@ int main()
 
 
 
-                                        // ✅ Optimized Alternatives for Fibonnaci series {Dynamic Programming}
+                                        //  Optimized Alternatives for Fibonnaci series {Dynamic Programming}
 // 1. Memoization (Top-down DP):
 /*
 int fib(int n, vector<int>& dp) {
@@ -562,6 +588,8 @@ int fib(int n, vector<int>& dp) {
 */
 // Time: O(n)
 // Space: O(n) (recursion + memo array)
+
+
 
 
 //2. Tabulation (Bottom-up DP):

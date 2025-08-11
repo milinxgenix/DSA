@@ -4,7 +4,7 @@
 
 
 
-                            // Check if a Pair Sums to Target (Sorted Array)
+                            // Check if a Pair Sums to Target (Sorted Array)   :- Won't work in Q-1 LeetC (Two Sum) as array was not sorted there
 /*
 #include <iostream>
 #include <vector>
@@ -60,7 +60,7 @@ void reverseVector(vector<int> &v) {
 int removeDuplicates(vector<int> &nums) {
     if (nums.empty()) return 0;
 
-    int i = 0;  // slow pointer
+    int i = 0;                                          // slow pointer
     for (int j = 1; j < nums.size(); j++) {
         if (nums[i] != nums[j]) {
             i++;

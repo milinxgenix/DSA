@@ -122,16 +122,16 @@ int main(){
         cout<<endl;
 
 //1  .begin() :-
-        cout<< *(v.begin()) <<endl;    //returns the value at index 0 on derefrencing
+        cout<< *(v.begin()) <<endl;     // returns the value at index 0 on derefrencing
 
 //2  .end()   :- 
-        cout<< *(v.end()-1) <<endl;    //v.end() gives garbage value as it points value at index n not (n-1)
+        cout<< *(v.end()-1) <<endl;     // *(v.end()) gives garbage value as it points value at index n not (n-1)
 
 //3  .rbegin()  :-  
-        cout<< *(v.rbegin()) <<endl;   //this will point (n-1) so won't through garbage
+        cout<< *(v.rbegin()) <<endl;    // this will point (n-1) so won't through garbage
 
 //4  .rend()    :-
-        cout<< *(v.rend()) <<endl;     //reverse end won't points 1st element but a garbage value coming just before the 1st element         
+        cout<< *(v.rend()) <<endl;      // reverse end won't points 1st element but a garbage value coming just before the 1st element         
 
 
 //Creating a loop through iterator
@@ -152,6 +152,12 @@ int main(){
         for(auto it=v.rbegin(); it!=v.rend(); it++){      //whole above thing can be sorted into a keyword auto
                 cout<< *(it) <<" ";                       //Instead of  "it!=v.rend()"  we can also use  "it<v.rend()"
         }
+
+// Above Reverse iterator code is equivalent to:
+        for(int i = v.size() - 1; i >= 0; i--){           // Here we keep i-- but in above iterator we keep i++ only even in reverse also.
+                cout << v[i] << " ";
+        }
+
 }
 */                   
 
@@ -230,11 +236,14 @@ int main(){
         }
         cout<<endl;
 
-//Indexing possible in Deque & Vector but not in List
+//Indexing possible in Deque & Vector but not in List {Random Access}
         cout<<d[3]<<endl;
         cout<<d.at(3)<<endl;
 }
 */
+// vector :- takes O(n) for push_front but O(1) for push_back
+// Deque  :- takes O(1) for both push_front() and push_back()            {Rest all same as vector}
+
 
 
 
@@ -242,6 +251,7 @@ int main(){
 /*
 #include<iostream>
 #include<vector>
+#inlcude<utility>
 using namespace std;
 
 int main(){
@@ -271,7 +281,7 @@ cout<<endl;
 
                                                 // VECTOR of PAIRs :-
 
-        vector<pair<int,int>> vec = {{1,2}, {2,3}, {5,6}};
+vector<pair<int,int>> vec = {{1,2}, {2,3}, {5,6}};
 
 //Push_Back VS Emplace_Back
         vec.push_back({8,9});
@@ -301,7 +311,7 @@ cout<<endl;
 
 
 
-                                                        // ARRAY of PAIRs:-
+                                                // ARRAY of PAIRs:-
 
 pair<int, int> arr[] = {{1,2},{2,3},{3,4},{8,9}};
 
@@ -311,18 +321,32 @@ for(auto val : arr){
         cout<<val.first<<" "<<val.second<<endl;     
 }
 
+
+
+                                                // Pair of Vectors 
+pair<vector<int>, vector<string>> data;      
+
+// First vector: integers
+    data.first = {1, 2, 3}; 
+// Second vector: strings
+    data.second = {"apple", "banana", "cherry"};
+
+
+
+                                                // Pair of Arrays
+pair<int[3], int[3]> arrs = { {1, 2, 3}, {4, 5, 6} };
+// Accessing elements
+    for (int i = 0; i < 3; i++) {
+        cout << arrs.first[i] << " " << arrs.second[i] << endl;
+    }
+
 }
 */
 
 
 
 
-
-
-
-
-
-                                        //Non-Sequential Containers
+                                        //Non-Sequential Containers 
                         //1. STACK:- LIFO :--  element added at the last will be popped out first
 /*                        
 #include<iostream>
@@ -421,7 +445,7 @@ int main(){
         q.emplace(19);
 
         while(!q.empty()){
-                cout<<q.top()<<" ";     //largest will be at the top of priority stack/queue
+                cout<<q.top()<<" ";             //largest will be at the top of priority stack/queue
                 q.pop();                            
         }
 cout<<endl;
@@ -461,7 +485,7 @@ int main(){
 
 //Insert :-
         m.insert({"camera", 25});
-        //m.insert({"camera", 25},{"lens", 8});         //can't pass mustiple keys & value like this
+        //m.insert({"camera", 25},{"lens", 8});         //can't pass multiple keys & value like this
 
 //Emplace :-
         m.emplace("toolkit", 90);
@@ -484,7 +508,7 @@ int main(){
                 cout<<"not found\n";
         }
 
-//since it pair kind of data so we can use auto keyword here
+//since it pair kind of data so we can use pair/auto keyword here
         for(auto p: m){
                 cout << p.first << " " << p.second <<endl;
         }
@@ -504,14 +528,14 @@ int main() {
     map1[1] = "one";
     map1[2] = "two";
 
-    auto it = map1.find(1);             // iterator of key "1" will be stored in 'it'
+    auto it = map1.find(1);                                             // iterator of key "1" will be stored in 'it'
     if (it != map1.end()) {
-        auto pair = *it;                // dereferencing the iterator 'it'
+        auto pair = *it;                                                // dereferencing the iterator 'it'
         cout << pair.first << " " << pair.second << endl;
     }
 
 
-//     if (auto it = map1.find(1); it != map1.end()) {                   //Same above thing can be done like this also 
+//     if (auto it = map1.find(1); it != map1.end()) {                  //Same above thing can be done like this also 
 //         cout << it->first << " " << it->second << endl;
 //     }
 
@@ -563,7 +587,7 @@ cout<<endl<<endl;
 
 
 
-        // Erasing all the similar keys with specific value
+        // Erasing all the similar keys with 'specific value'
 /* 
 #include<iostream>
 #include<map>
@@ -584,7 +608,7 @@ int main()
         for (auto it = rangeAC.first; it != rangeAC.second; ++it) {
                 if (it->second == 5) {
                         m.erase(it);
-                        break;                  // Only erase the first 1st matching
+                        break;                          // Only erase the first 1st matching
                 } 
         }
 
@@ -678,7 +702,7 @@ int main(){
         cout<< "lower bound for 9 = "<< *(s.lower_bound(9)) <<endl;        // If no value in the SET is either equal to or greater than given Input then it will return   "s.end();"
 cout<<endl;
 //Upper Bound
-        cout<< "upper bound for 4 = "<< *(s.upper_bound(4)) <<endl;        //Will always return a greater value to our input (not same not small always greater)
+        cout<< "upper bound for 4 = "<< *(s.upper_bound(4)) <<endl;        //Will always return a greater value to our input (not same not small, always greater)
         cout<< "upper bound for 6 = "<< *(s.upper_bound(6)) <<endl;
         cout<< "upper bound for 8 = "<< *(s.upper_bound(8)) <<endl;        //if greater value doesn't exist it will return  "s.end();"
         cout<< "upper bound for 9 = "<< *(s.upper_bound(9)) <<endl;
@@ -777,7 +801,7 @@ int main(){
 */
 
 
-// Vector
+// Vector          :-     uses Introsort (a hybrid of Quicksort, Heapsort, and Insertion Sort).   {O(n log n)).}
 /*
 #include<iostream>
 using namespace std;
@@ -785,7 +809,7 @@ using namespace std;
 int main(){
         vector<int> vec = {3,5,1,8,2};
 
-        sort(vec.begin(), vec.end());
+        sort(vec.begin(), vec.end());           // T - O(n log n)).           S - O(log n)  {due to recursion stack}
 
         for(auto val:vec){
                 cout<<val<<" ";
@@ -798,9 +822,11 @@ int main(){
                                                                 //SORTING
 
 //      * Sorting function is based on intro sort :- combination of 3 sorting techniques (Quick Sort, Heap Sort, Insertion Sort)
-//      * Comparator is a function that tells the logic of comparision  
 //      * In Descending Order, we pass a comparator or functor
+//      * Comparator is a function that tells the logic of comparision  
 //      * need to pass iterator(pointer) only
+//      * T - O(n log n)).           
+//      * S - O(log n)        {due to recursion stack}
 /*
 #include<iostream>
 using namespace std;
@@ -884,7 +910,7 @@ bool comp(pair<int,int> p1, pair<int,int> p2){
         if(p1.second < p2.second) return true;     //these two conditions will be checked 1st
         if(p1.second > p2.second) return false;
 
-        if(p1.first < p2.first) return true;       //if it does fall under any of two above conditions this condition will be check so for  "p1.second = p2.second" this condition will be checked
+        if(p1.first < p2.first) return true;       //if it does fall under any of two above conditions this condition will be checked;  so for  "p1.second = p2.second" this condition will be checked
         else return false;
 }
 
@@ -928,20 +954,22 @@ int main(){
         }
         cout<<endl;
 
-        rotate(vec.begin(), vec.begin()+3, vec.end());      //will place starting 3 elements at last,   if we do as "vec.begin()+4" then starting 4 elements will be placed at end 
+        rotate(vec.begin(), vec.begin()+3, vec.end());          //will place starting 3 elements at last,   if we do as "vec.begin()+4" then starting 4 elements will be placed at end 
         cout<<"after rotate: ";
         for(auto val:vec){
                 cout<<val<<" ";
         }
 
 
-        rotate(vec.begin(), vec.begin()+3, vec.end()-2);      //will place starting 3 elements before the 2nd last element{vec.end()-2}
+        rotate(vec.begin(), vec.begin()+3, vec.end()-2);        //will place starting 3 elements before the 2nd last element{vec.end()-2}
         cout<<"after rotate: ";
         for(auto val:vec){
                 cout<<val<<" ";
         }
 }
 */
+// Left Rotation  :- rotate(v.begin(), v.begin()+k, v.end());           //each element will get Left shifted by 'k' positions
+// Right Rotation :- rotate(v.begin(), v.end()-k, v.end());             //each element will get Right shifted by 'k' positions
 
 
 
@@ -1002,7 +1030,7 @@ using namespace std;
 int main()
 {
         vector<int> vec = {1,2,3,4,5,6};
-        cout << binary_search(vec.begin(), vec.end(), 4)<<endl;         //Returns 1 if found (true)
+        cout << binary_search(vec.begin(), vec.end(), 4)<<endl;           //Returns 1 if found (true)
         cout << binary_search(vec.begin(), vec.end(), 10)<<endl;         //Returns 0 if not found (false)
 
         return 0;
@@ -1040,31 +1068,6 @@ int main()
 
 
 
-
-                                                                // Count SET Bits
-/*
-#include<iostream>
-#include<string>
-using namespace std;
-int main()
-{
-        int n = 15;
-        cout<< __builtin_popcount(n) << endl;
-
-        long int n2 = 15;
-        cout<< __builtin_popcountl(n2) << endl;
-
-        long long int n3 = 15;
-        cout<< __builtin_popcountll(n3) << endl;
-
-        return 0;
-}
-*/
-
-
-
-
-
                                 // SWAP, MIN, MAX
 /*                                
 #include<iostream>
@@ -1085,3 +1088,22 @@ int main()
 
 
 
+                                        // Count SET Bits
+/*
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+        int n = 15;
+        cout<< __builtin_popcount(n) << endl;
+
+        long int n2 = 15;
+        cout<< __builtin_popcountl(n2) << endl;
+
+        long long int n3 = 15;
+        cout<< __builtin_popcountll(n3) << endl;
+
+        return 0;
+}
+*/

@@ -23,7 +23,7 @@ using namespace std;
 int main(){
     int n ;
     cin>>n;
-    int count = (int)(log10(n)+1);
+    int count = (int)(log10(n)+1);              // Typecasting decimal value into 'INT'
     cout<<count;
 }
  */
@@ -81,7 +81,7 @@ int main() {
 
 
 
-//LeetC Q7
+                                                        //LeetC Q7
 /* 
 #include<climits>           // For INT_MAX and INT_MIN
 
@@ -107,6 +107,8 @@ public:
 */
 // INT_MAX is 2,147,483,647 → if rev > 214748364, multiplying by 10 will overflow.
 // INT_MIN is -2,147,483,648 → if rev < -214748364, multiplying by 10 will underflow.
+// T - O(log10(N))
+// S - O(1)
 
 
 
@@ -158,7 +160,7 @@ int main()
     int n;
     cin>>n;
     int original = n;
-    int reverse = 0;
+    int reverse = 0;                // Unlike some datastructure{vector}  this reverse variable don't occupy O(n) space but O(1) space only
     while(n>0){
         int digit = n%10;
         reverse = reverse*10 + digit;
@@ -176,7 +178,7 @@ int main()
 
 
 
-//LeetC -- Q9
+                                                    //LeetC -- Q9
 /* 
 class Solution {
 public:
@@ -194,6 +196,9 @@ public:
     }
 };
 */
+// T - O(log10(D))      ; D is no of digits
+// S - O(1)
+
 
 
 
@@ -251,12 +256,13 @@ int main()
     int N1, N2;
     cin>>N1>>N2;
 
-    int d = min(N1,N2);
-    int D = max(N1,N2);
-    while(d!=0){
-        int r = D % d;
-        D = d;
-        d = r;
+    int d = min(N1,N2);             // Divisor
+    int D = max(N1,N2);             // Dividend
+
+    while(d!=0){                    // Loops until divisor didn't get 0     {remainder turned into divisor}
+        int r = D % d;              // Remainder
+        D = d;                      // Divisor will be Dividend for next loop
+        d = r;                      // Remainder will be Divisor for next loop
     }
     cout<<D;
 } 

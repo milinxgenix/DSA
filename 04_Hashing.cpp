@@ -29,7 +29,7 @@ int main()
     cin>>q;
     while(q--){
         int numb;
-        cout<<"Enter the number whose occurance u want to find: ";
+        cout<<"Enter the number whose occurance u want to find: ";          // can't enter number greater than 14
         cin>>numb;
 
         //fetching 
@@ -187,6 +187,7 @@ int main()
 // O(n^2) >> O(n) >> O(logn) >> O(1)   ;  O(n^2) is worst and O(1) is best
 
 // if we don't clean to remove spaces then Space comp :- O(1)
+// Instead of creating auxiliary string "Cleaned" we could have directly pass original string characters as keys of hashMAP     {Reference : Q.125 palindrom check LeetC}
 
 // Here in above code we don't need to store MAP keys and values using 'INSERT' function of MAP,   this "F[c]++"  automatically insert the key 'c' with value as '0' and increments the value of the key 'C' on further occurance of 'C'.
 // freq[c]++ both inserts and updates the map key and their respective value pairs, all in one line.
@@ -333,12 +334,10 @@ int main()
 
 
 
-                                                            //  LEET CODES 
+                                                    //  LEET CODES 
 
 
-
-
-                                                            // LEET-C Q1 (TWO SUM)
+                                                // LEET-C Q1 (TWO SUM)
 /*
 #include<iostream>
 #include<unordered_map>
@@ -374,7 +373,7 @@ vector<int> two_sum(vector<int>& nums, int target){
     *           vector<int> result;
                 result.push_back(m[complement]);
                 result.push_back(i);
-                return result;                    could be done like this also
+                return result;                   // could be done like this also
 
     * Loop → O(n) &  unordered_map → O(1) (constant time), due to hashing
                     ➡️ Total Time Complexity: O(n)
@@ -386,7 +385,7 @@ vector<int> two_sum(vector<int>& nums, int target){
 
 
 
-                                                            //LeetC - 41
+                                                //LeetC - 41 (First Missing Positive)
 
 // Note :
 /*
@@ -411,9 +410,9 @@ public:
 
         int Max = *max_element(nums.begin(), nums.end());
 
-        for (int i = 1; i <= Max + 1; i++) {
+        for (int i = 1; i <= Max + 1; i++) {            // For every natural number upto max element of array
         bool found = false;
-            for (int j = 0; j < nums.size(); j++) {
+            for (int j = 0; j < nums.size(); j++) {     // searching each natural numb linearly within array
                 if (nums[j] == i) {
                     found = true;
                     break;
@@ -445,7 +444,7 @@ public:
 
         int i = 1;
         while(true){
-            if(m.find(i)==m.end()){
+            if(m.find(i)==m.end()){             // can also use : 'm[i] == 0'
                 return i;
             }
             i++;
@@ -472,7 +471,7 @@ public:
 
 
 
-    //  INDEX REPLACEMENT METHOD (In-Place method for const space use)    
+    //  INDEX REPLACEMENT METHOD (In-Place method for const space use)    :- Re-arrange numbers at their correct index, Given array has consecutive elements so the number not at it's correct index after rearranging will be the missing number
 // Optimal Soln :     Time = O(n)   space = O(1)        
 /*
 class Solution {
@@ -481,8 +480,8 @@ public:
             int n = nums.size();
             int i = 0;
 
-            while (i < n) {     
-                if (nums[i] > 0 && nums[i] <= n) {                      // Only swap if nums[i] is in the range [1, n]
+            while (i < n) {                                             // To prevent runtime overflow   
+                if (nums[i] > 0 && nums[i] <= n) {                      // Only swap if nums[i] is in the range [1, n]      check copy dry-run examples to understand this edge cases
                     int correctIndex = nums[i] - 1;                     // Only compute correctIndex if nums[i] is in range
                     if (nums[i] != nums[correctIndex]) {                // Don't swap if already in correct position
                         swap(nums[i], nums[correctIndex]);
@@ -494,7 +493,7 @@ public:
 
             // Find first index where value is not index+1
             for (int i = 0; i < n; i++) {
-                if (nums[i] != i + 1) return i + 1;
+                if (nums[i] != i + 1) return i + 1;                     // i is correct index and i+1 is the missing positive number which should be there at i
             }
  
             return n + 1;
@@ -569,18 +568,20 @@ public:
             // Hash Set :-              Time - O(log(n))   Space - O(n)
             
 // * No need to track index value so better to use HashSet rather than HashMap
-// * More space efficient than HashMap as it stores key only and map stores key,value pair 
+// * More space efficient than HashMap as it stores key only and map stores key-value pair 
 // * In Q1 (2-Sum) we need to return incides so we tracked it using Hash-Map but here we just asked to find the counts so no need to track indices so using Hash-Set
+
 /* 
 #include<unordered_set>
 class Solution {
 public:
     int arithmeticTriplets(vector<int>& nums, int diff) {
         int countt = 0;
-        unordered_set<int> S(nums.begin(), nums.end());
+
+        unordered_set<int> S(nums.begin(), nums.end());                 // storing array's element into SET 'S'
 
         for (int num : nums) {
-            if (S.count(num + diff) && S.count(num + 2 * diff)) {
+            if (S.count(num + diff) && S.count(num + 2 * diff)) {       // Count function works as find 
                 countt++;
             }
         }
@@ -592,5 +593,5 @@ public:
  */
 
 
-
-
+// Hash Array Stores interger only as their index so transform char into ASCII value
+// Hash Map stores characters, words also as their key.
