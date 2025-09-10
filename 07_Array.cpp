@@ -1,6 +1,6 @@
                                         // 1. Largest Element in Array
 
-// Optimized: Iteration (Linear Scan)     Time : O(N)      Space : O(1)       ✅ better than sorting
+// Optimized: Iteration (Linear Searching)     Time : O(N)      Space : O(1)       ✅ better than sorting
 /*
 #include<iostream>
 #include<string>
@@ -84,11 +84,11 @@ int main()
     // Sort the vector first
     sort(v.begin(), v.end());
 
-// unique() removes duplicates and moves unique elements to front
+// unique() moves unique elements to front(beginning of array) and return an iterator to last unique element
     auto it = unique(v.begin(), v.end());
 
 // Erase the trailing duplicates
-    v.erase(it, v.end());
+    v.erase(it, v.end());                       // erase from it(last unique element) to the end of array ; all the duplicates coming after unique elements will be removed
 
     cout<<"2nd largest: "<<*(v.end()-2)<<endl;
     cout<<"2nd smallest: "<<*(v.begin()+1);
@@ -98,7 +98,7 @@ int main()
 
 
 
-// Slight better :              Time : O(N)  Traversed Twice         Space : O(1)
+// Slight better :              Time : O(2N)  Traversed Twice         Space : O(1)
 /* 
 #include<iostream>
 #include<climits>                                   // for INT_MAX & INT_MIN
@@ -220,7 +220,9 @@ int main() {
 
                                         // 3. Sorted in Ascending or NOT
 
-// Brute force :- using nested loops   Time - O(n^2)   space - O(1)                                       
+// Brute force :- using nested loops   Time - O(n^2)   space - O(1)   
+
+
 // Optimal Approach :-  Time - O(n)  Space - O(1)  
 /* 
 #include<iostream>
@@ -264,7 +266,7 @@ int main()
     }
 
     bool isSorted = true;
-    if(arr[0]<arr[1]){
+    if(arr[0]<arr[1]){                        // checking ascending series
         for(int i=0; i<n-1; i++){
             if(arr[i]>arr[i+1]){
                 isSorted = false;
@@ -273,7 +275,7 @@ int main()
         }
     }
 
-    else{
+    else{                                    // checking descending series
         for(int i=0; i<n-1; i++){
             if(arr[i]<arr[i+1]){
                 isSorted = false;
@@ -310,11 +312,11 @@ int main()
 //         int min1 = 0, min2 = 0;
 
 //         for (int i = 0; i < n; i++) {
-//             if (nums[min1] > nums[i]) min1 = i;
+//             if (nums[min1] > nums[i]) min1 = i;              // Occurance of minimest element for 1st time
 //         }
 
 //         for (int i = 0; i < n; i++) {
-//             if (nums[min2] >= nums[i]) min2 = i;
+//             if (nums[min2] >= nums[i]) min2 = i;            // Last occuring index of minimest element
 //         }
 
 //         vector<int> arr1 = nums;
@@ -329,7 +331,8 @@ int main()
 */
 
 //  1 Test Case failed cause in this rotation taking place only about 1st and last min element found 
-//  Below one is correct as we are rotating for all minimum positions 
+//  Below one ⤵️ is correct as we are rotating for all minimum positions 
+
 //  int minIndex = min_element(nums.begin(), nums.end()) - nums.begin(); 
 //  int minVal   = *min_element(nums.begin(), nums.end());                          -- BuiltIN functions
 
@@ -350,14 +353,14 @@ public:
     }
 
     bool check(vector<int>& nums) {
-        int min = *min_element(nums.begin(), nums.end());       // Built-In func to find minimest element in array 
+        int min = *min_element(nums.begin(), nums.end());           // Built-In func to find minimest element in array 
 
-        for(int i=0; i<nums.size(); i++){                       // Finding all minimum values at diff index and rotating for each of them
+        for(int i=0; i<nums.size(); i++){                           // Finding all minimum values at diff index and rotating for each of them
             if(nums[i] == min){
                 vector<int> arr(nums);                              // Copy constructor to copy elements of one vector to another
-                rotate(arr.begin(), arr.begin()+i, arr.end());
+                rotate(arr.begin(), arr.begin()+i, arr.end());      // Rotating by each i (i is indices at which min value is present)
                 if(isSorted(arr)){
-                    return true;                                   // Don't directly return isSorted(arr) as it will check for 1st min rotation only
+                    return true;                                    // Don't directly return isSorted(arr) as it will check for 1st min rotation only
                 } 
             }
         }
@@ -384,7 +387,7 @@ public:
             }
         }
     
-// Also check the "wrap-around" drop: last -> first
+// Also check the "wrap-around" drop: last > first
         if(nums[n-1]>nums[0]){                                // nums[n-1] is the last element 
             cnt++;
         }
@@ -396,7 +399,7 @@ public:
 
 // check for number of rotations and wrap-around condition
 // There should be single rotation (one 1 drop so count<=1) and also do wrap around to check below testcase conditions
-// count <=1 as [3,4,5,2,1]  one drop is allowed "5>2" -- "{nums[i-1]>nums[i]}" in sorted array this thing can be occur for atmost 1 time it there's some rotation
+// count <=1 as [3,4,5,1,2]  one drop is allowed "5>2" -- "{nums[i-1]>nums[i]}" in sorted array this thing can be occur for atmost 1 time it there's some rotation
 // cnt == 0 → Already sorted (no rotation needed)
 // cnt == 1 → Valid rotated sorted array (one rotation point)
 // cnt > 1 → Not valid (more than one inversion → can't fix by one rotation)  
@@ -448,7 +451,7 @@ int main()
 
 
 
-// Using In-Place  :-   Using Hash-Set as it's doesn't stores duplicate elements   (In-Place tech but need to create a extra data structure)
+// Using Hash-Set as it's doesn't stores duplicate elements   (Not an In-Place tech, need to create a extra data structure)
 /*                  Time : O(n*log(n))+O(n)    space : O(n) 
 #include<iostream>
 #include<set>
@@ -468,11 +471,11 @@ int main()
     }
     
     int j = 0;
-    for (int x: s) {                //placing the set elements into array and replacing old array elements
+    for (int x: s) {                // placing the set elements into array and replacing old array elements
       arr[j++] = x;
     }
 
-    n = s.size();               // Redefined the size of array equvalence to set size garbage duplicate values will be trimmed out
+    n = s.size();                   // Redefined the size of array equvalence to set size garbage duplicate values will be trimmed out
     for(int i=0; i<n; i++){
         cout<<arr[i]<<" ";
     }
@@ -480,7 +483,6 @@ int main()
  */
 
 
- 
 
 // Two Pointer :- Optimised sol for removing duplicates using In-Place    Time :- O(n)   Space :- O(1)
 /* 
@@ -519,6 +521,26 @@ int main()
 
 
 
+                                        // LeetC - 26 Remove Duplicates from sorted array
+/*                                        
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+        int i = 0;
+        for(int j=1; j<nums.size(); j++){
+            if(nums[i]!=nums[j]){
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i+1;
+    }
+};                
+*/
+
+
+
 
 
 
@@ -542,7 +564,7 @@ int main()
     }
 
     int n = v.size();
-    int temp[n];                   // Created extra array (don't create vector, As "temp[i-1] = v[0]" not possible in vector)
+    int temp[n];                   // Created extra array (don't create vector, As "temp[i-1] = v[0]" this syntax doesn't works in vector)
     for(int i=1; i<n; i++){
         temp[i-1] = v[i];
     }
@@ -576,7 +598,7 @@ int main()
     }
 
     int n = v.size();
-    int temp = v[0];                                // assigning temp as 1st element to switch with last 
+    int temp = v[0];                                // storing 1st element in temp to switch with last, at the end
 
     int i = 0;
     for(int j=1; j<n; j++){
@@ -584,7 +606,7 @@ int main()
         i++;
     }
     
-    // for (int i = 0; i < n - 1; i++) {            // instead of 2 pointer can be done like this also
+    // for (int i = 0; i < n - 1; i++) {            // instead of 2 pointers, it can be done like this also
     //   arr[i] = arr[i + 1];
     // }
 
@@ -689,7 +711,7 @@ int main()
 
 
 
-                                        // Brute Force :-   T-O(n)    S-O(1)
+                                        // Brute Force :-   T-O(n)    S-O(k)
 // For Rotating the Elements to left :
 /* #include<iostream>
 #include<string>
@@ -803,6 +825,7 @@ int main() {
 
 
                             // Optimal Approach (Left Rotation)  -- for right check leetC soln
+//  T - O(N)  &  S - O(1)
 /* 
 #include<iostream>
 #include<string>
@@ -926,6 +949,7 @@ public:
             int temp = nums[start];
             nums[start] = nums[end];
             nums[end] = temp;
+        //  swap(nums[start],nums[end])         // could be done like this also
             start++;
             end--;
         }
@@ -1247,7 +1271,7 @@ int main()
     return 0;
 } 
 */
-// If used SET then T - O((n + m) log(n + m))  else if using those commented conditions T - O(m+n)
+// If used SET then T - O((nlog(n) + mlog(m))  else if using those commented conditions T - O(m+n)      //Inserting in SET have higher time comp than VECTOR
 
 
 
@@ -1740,16 +1764,343 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int n = nums.size();
-        int xOr = 0;                  //can't take xor as variable name
+        int xOr = 0;                    //can't take xor as variable name
         for(int i=0; i<n; i++){
-            xOr = xOr ^ nums[i];
+            xOr = xOr ^ nums[i];        // Element with pair will have XOR as 0 and XOR(0,i) = i  where i is the only element occuring for single time 
         }
         return xOr;
     }
 }; */
+
 
 //Other approaches :- 
 //  * BruteForce - nested loops    T{O(n^2)}                S{O(1)}
 //  * Hashing -                    T{O(N)+O(N)+O(N)}        S{O(maxEle + 1)}
 //  * Map     -                    T{O(N*logM) + O(M)}      S{O(M)}                 ; m is size of map
 //  * XOR     -                    T{O(n)}                  S{O(1)}
+
+
+
+
+
+
+                        //  15. Longest Subarray with given Sum K (POSITIVES + NEGATIVES)
+/*
+// Brute-force : 3 loops    T - O(n^3)      S - O(1)        (POSITIVES + ZEROES + NEGATIVES)
+#include<iostream>
+#include<string>
+using namespace std;
+int la(int arr[], int n, int m){
+    int len = 0;
+    for(int i=0; i<n; i++){
+        for(int j=i; j<n; j++){
+            int sum = 0;
+            for(int k=i; k<=j; k++){
+                sum += arr[k];                  // sum is finded for each subarray again & again
+            }
+            if(sum == m){                       // here this need to be placed outside 'k' loop
+                len = max(len, j-i+1);
+            }
+        }
+    }
+    return len;
+}
+int main()
+{
+    int m;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>m;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"The longest subarray with sum 5 is "<<la(arr, n, m);
+    return 0;
+}
+*/
+
+
+
+// Brute-force : 2 loops    T - O(n^2)      S - O(1)    (POSITIVES + ZEROES + NEGATIVES)
+/*
+#include<iostream>
+#include<string>
+using namespace std;
+int la(int arr[], int n, int m){
+    int len = 0;
+    for(int i=0; i<n; i++){
+        int sum = 0;
+        for(int j=i; j<n; j++){
+            sum += arr[j];        
+            if(sum == m){                           // Here this can be place within 'j' loop as sum is incremented at every loop of j
+                len = max(len, j-i+1);
+            }
+        }
+    }
+    return len;
+}
+int main()
+{
+    int m;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>m;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"The longest subarray with sum 5 is "<<la(arr, n, m);
+    return 0;
+}
+*/
+
+
+
+// Better Approach : HashMaps               T - O(nlog(n))      S - O(n)           // Most Optimal soln for (POSITIVE + ZEROES + NEGATIVES)
+/*
+#include<iostream>
+#include<map>
+using namespace std;
+int la(int arr[], int n, int k){
+    int sum = 0;
+    int maxlen = 0;
+    map<int, int> m;
+
+    for(int i=0; i<n; i++){
+        sum += arr[i];
+        if(sum == k){
+            maxlen = max(maxlen, i+1);                  // Length of 1st subarray with sum 'k'
+        }
+
+        int rem = sum - k;                              // Prefix Sum
+        
+        if(m.find(rem)!=m.end()){                       // If prefix sum exist in hashmap
+            int len = i-m[rem];                         // Lenght of new subarray with sum 'k',    m[rem] is index of last element of prev subarray {index at which 'sum-k' is stored in hahsmap}
+            maxlen = max(maxlen, len);                  // Update maxlen only when length of new subarray greater than the prev one
+        }
+
+        if(m.find(sum)==m.end()){                       // store into hashmap only if sum don't exist already, don't overwrite sum with new index 
+            m[sum]=i;                                   // storing sum into hashmap along with indices;  sum = key  &&  index = values of hashmap
+        }
+    }
+    return maxlen;
+}
+
+int main()
+{
+    int k;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>k;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"The longest subarray with sum 5 is "<<la(arr, n, k);
+    return 0;
+}
+*/
+// Ordered Map : O(Nlog(n))   Unordered Map : O(1)   or  O(n^2) if collision occured
+
+
+
+
+// Optimal Approach : 2-Pointer  for (Positives & Zeroes)      T - O(2N)      S - O(1)
+/*     
+#include<iostream>
+#include<string>
+using namespace std;
+int la(int arr[], int n, int k){
+    int sum = 0;
+    int maxlen = 0;
+
+    int j=0;
+    for(int i=0; i<n; i++){
+
+        sum += arr[i];                      // Summation 
+    
+        while(sum>k && j<=i){               // until sum doesn't exceeds 'K'
+            sum -= arr[j];                  // remove beginning element one by one until sum<k
+            j++;                           
+        }
+        if(sum==k){
+            maxlen = max(maxlen, i-j+1);
+        }
+    }
+    return maxlen;
+}
+
+int main()
+{
+    int k;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>k;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"The longest subarray with sum k is "<<la(arr, n, k);
+    return 0;
+}
+*/
+// Time Comp will be O(2N) at worst case not O(n^2)  because the internal while loop is not always running for 'n' times for each iteration of 'i',  Max to Max j can be iterated to n so for whole(All) 'i' the inner while loop will run for n times in total so N+N= 2N
+
+
+
+
+
+
+
+                                    // 16. Subarray Sum Equals K (Leet-C 560)    {Same as above concept}
+
+// For (Positive & Zeroes) : 2-pointer  {Optimal} 
+/*                   
+#include<iostream>                                    
+#include<climits>
+using namespace std;
+    int subarraySum(int nums[], int n, int k) {
+        int sum = 0;
+        int count = 0;
+
+        int j=0;
+        for(int i=0; i<n; i++){
+            sum += nums[i];
+            while(sum>k && j <= i){             // must add "&& j <= i"  as for k = 0, arr={1} it's showing count = 1 but it should show 0 
+                sum -= nums[j];
+                j++;
+            }
+            if(sum == k && j <= i){            // must add "&& j <= i"
+                count++;
+            }
+        }
+        return count;
+    }
+
+int main(){
+    int k;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>k;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"No of subarrays with sum k is "<<subarraySum(arr, n, k);
+    return 0;
+}
+*/
+
+
+
+// For Negatives including : HashMap + prefix sum  (Optimal)        T- O(NlogN)  S- O(N)
+/* 
+#include<iostream>
+#include<map>
+using namespace std;
+int subarraySum(int arr[], int n, int k){
+    map<int, int> m;  
+    int sum = 0;
+    int count = 0;
+
+    for(int i=0; i<n; i++){
+        sum += arr[i];
+
+        if(sum == k){                
+            count++;
+        }
+        
+        int rem = sum-k;
+        if(m.find(rem) != m.end()){
+            count += m[rem];                // here m[rem] gives freq not index like in longest subarray Q
+        }
+
+        m[sum]++;                           // Here Map stores sum and the number of time it occured {freq. of sum}
+    }
+    return count;
+}
+
+int main()
+{
+    int k;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>k;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"No of subarrays with sum k is "<<subarraySum(arr, n, k);
+    return 0;
+} 
+*/
+
+
+
+// Brute-Force 
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+int subarraySum(int arr[], int n, int k){
+
+    int count = 0;
+
+    for(int i=0; i<n; i++){
+        int sum = 0;
+        for(int j=i; j<n; j++){
+            sum += arr[j];
+            if(sum == k){
+                count++;
+            }
+        }
+    }
+    return count;
+}
+int main()
+{
+    int k;
+    cout<<"enter equivalent sum to match with"<<endl;
+    cin>>k;
+
+    int n;
+    cout<<"enter size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    cout<<"enter elements of array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<"No of subarrays with sum k is "<<subarraySum(arr, n, k);
+    return 0; 
+
+} 
+*/
+
+
+

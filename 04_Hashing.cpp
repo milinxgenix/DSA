@@ -336,9 +336,9 @@ int main()
 
                                                     //  LEET CODES 
 
-
                                                 // LEET-C Q1 (TWO SUM)
-/*
+//  Hashing :  T - O(n)    S - O(n)
+/*      
 #include<iostream>
 #include<unordered_map>
 using namespace std;
@@ -381,6 +381,31 @@ vector<int> two_sum(vector<int>& nums, int target){
 */
 
 
+
+
+//  2-Pointer :   But can't be used in leet Q1 (Two Sum)   as we are sorting here and it has asked to return indices from actual vector
+/*                  T - O(n)      S - O(1)
+class Solution {
+public:
+    void twoSum(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int left = 0;
+        int right = nums.size()-1;
+        while(left<right){
+            if(nums[left]+nums[right]<target){
+                left++;
+            }
+            else if(nums[left]+nums[right]>target){
+                right--;
+            }
+            else{
+                cout<<"YES";
+            }
+        }
+        cout<<"NO";
+    }
+};
+*/
 
 
 
@@ -471,7 +496,7 @@ public:
 
 
 
-    //  INDEX REPLACEMENT METHOD (In-Place method for const space use)    :- Re-arrange numbers at their correct index, Given array has consecutive elements so the number not at it's correct index after rearranging will be the missing number
+    //  INDEX CORRECTION METHOD (In-Place method for const space use)    :- Re-arrange numbers at their correct index, Given array has consecutive elements so the number not at it's correct index after rearranging will be the missing number
 // Optimal Soln :     Time = O(n)   space = O(1)        
 /*
 class Solution {
@@ -501,6 +526,7 @@ public:
     }
 };
 */
+// Here we can't use XOR like use to do to find missing number in array cause XOR applicable for just 1 missing number but here we need to find 1st missing among multiple missing numbers
 
 
 
