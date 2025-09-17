@@ -1784,7 +1784,7 @@ public:
 
 
 
-                        //  15. Longest Subarray with given Sum K (POSITIVES + NEGATIVES)
+                            //  15. Longest Subarray with given Sum K (POSITIVES + NEGATIVES)
 /*
 // Brute-force : 3 loops    T - O(n^3)      S - O(1)        (POSITIVES + ZEROES + NEGATIVES)
 #include<iostream>
@@ -2101,6 +2101,536 @@ int main()
 
 } 
 */
+
+
+
+                                            // 17. Sort an array of 0s, 1s and 2s
+
+// Brute-Force : Use any sorting tech.      T - O(n²)      S - O(1) 
+/*                          
+#include<iostream>
+#include<string>
+using namespace std;
+void sortC(int n, int arr[]){           
+    for(int i=n-1; i>=1; i--){                      // Bubble sort 
+        for(int j=0; j<i; j++){
+            if(arr[j]>arr[j+1]){
+                swap(arr[j],arr[j+1]);
+            }
+        }
+    }
+    for(int i=0; i<n; i++){
+        cout<<arr[i]<<" ";
+    }
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    sortC(n, arr);
+    return 0;
+} 
+*/
+// With sorting we can either do like 0011122 or 2211000  ASC/DSC but can be possible to follow this kind of pattern : 002211 or 2200111 or 110022 etc
+
+
+
+// 2 Pointers :              T - O(2n)       S - O(1)
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void sortC(int n, int arr[]){ 
+    int i = 0;
+    for(int j=0; j<n; j++){
+        if(arr[j]==0){
+            swap(arr[j],arr[i]);
+            i++;
+            
+        }
+    }
+
+    int k=i;
+    for(int j=i; j<n; j++){
+        if(arr[j]==1){
+            swap(arr[j],arr[k]);
+            k++;
+        }
+    }
+
+    for(int i=0; i<n; i++){
+        cout<<arr[i]<<" ";
+    }
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    sortC(n, arr);
+    return 0;
+} 
+*/
+// with this method we can sort colours into any pattern not necessarily ASC or DSC only 
+
+
+
+// Using Counts :    T-O(2n)   S-O(1)
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void sortC(int n, int arr[]){ 
+    int c0=0, c1=0, c2=0;
+
+// This loop have T-O(n)
+    for(int i=0; i<n; i++){
+        if(arr[i]==0){
+            c0++;
+        }
+        if(arr[i]==1){
+            c1++;
+        }
+        if(arr[i]==2){
+            c2++;
+        }
+    }
+
+// These 3 loops collectively have T-O(n)
+    for(int i=0; i<c0; i++){
+        arr[i] = 0;                         //In-placing 0 upto 'c0' index in arr
+    }
+
+    for(int i=c0; i<c1+c2; i++){
+        arr[i] = 1;                         //In-placing 1 from 'c0' to 'c1+c2' index in arr
+    }
+
+    for(int i=c1+c2; i<n; i++){
+        arr[i] = 2;                         //In-placing 2 from 'c1+c2' to 'n' index in arr
+    }
+
+
+// Printing array won't contri in T comp.
+    for(int i=0; i<n; i++){
+        cout<<arr[i]<<" ";
+    }
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    sortC(n, arr);
+    return 0;
+} 
+*/
+
+
+
+// Optimal Approach :  Dutch National flag algorithm (3-Pointers)       T - O(n)    S - O(1)
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+void sortC(int n, int arr[]){ 
+    int i = 0; 
+    int j = 0;
+    int k = n-1;
+
+    while(j<=k){                                // No need to go upto 'n' if j crosses k means array has been sorted already
+        if(arr[j]==0){
+            swap(arr[j],arr[i]);
+            i++;
+            j++;
+        }
+        else if(arr[j]==2){                     // don't increment j here!
+            swap(arr[j],arr[k]);
+            k--;
+        }
+        else{                                   // arr[j] == 1
+            j++;
+        }
+    }
+
+    for(int i=0; i<n; i++){
+        cout<<arr[i]<<" ";
+    }
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    sortC(n, arr);
+
+    return 0;
+} 
+*/
+
+
+
+                                            // LeetC - 75. Sort Colours
+/* 
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int i=0;                                //Begin ptr
+        int j=0;                                //Iterating ptr
+        int k=nums.size()-1;                    //End ptr
+
+        while(j<=k){
+            if(nums[j]==0){
+                swap(nums[j], nums[i]);
+                i++;
+                j++;
+            }
+
+            else if(nums[j]==2){
+                swap(nums[j], nums[k]);
+                k--;
+            }
+
+            else{
+                j++;
+            }
+        }
+    }
+}; 
+*/
+
+
+
+
+                                            // 18. Majority Element
+
+// Brute-Force : T - O(n^2)  S - O(1)
+        /*  for (int i = 0; i < n; i++) {
+                int cnt = 0;
+                for (int j = 0; j < n; j++) {
+                    if (v[j] == v[i]) {             // counting the frequency of v[i]
+                    cnt++;
+                }
+                if (cnt > (n / 2))
+                return v[i];
+            } */
+
+
+
+// Using MAP    T - O(n log n)    S - O(n)
+/* 
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+void major(int n, int arr[]){
+    unordered_map<int, int> m;
+
+    for(int i=0; i<n; i++){                         // T - O(N*logN)
+        m[arr[i]]++;
+    }
+
+    for (auto &p : m) {                             // T - O(N)
+        if (p.second > n/2) {
+            cout << "Majority element = " << p.first << endl;
+        }
+    }
+
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    major(n,arr);
+    return 0;
+} 
+*/
+
+
+
+// Sorting                  T - O(n log n)        S - O(1)
+/* 
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int major(int n, int arr[]){
+    sort(arr, arr+n);                           // T - O(nlogN)
+    int flag = 1;                               // Already counted the 1st occurance
+
+    for(int i=1; i<n; i++){                     // T - O(n)
+        if(arr[i] == arr[i-1]){
+            flag++;
+            if(flag > n/2) return arr[i];       // majority found
+        } 
+        else {
+            flag = 1;                           // reset count for new element
+        }
+    }
+    return -1;                                  // no majority element
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<major(n,arr);  
+    return 0;
+} 
+*/
+
+
+
+// Optimal Approach :        Boyer–Moore Majority Vote Algorithm:         T - O(n)    S - O(1)
+/* 
+#include<iostream>
+#include<string>
+using namespace std;
+int major(int n, int arr[]){
+    int c = 0;
+    int e;
+
+    for(int i=0; i<n; i++){
+        if(c==0){
+            c = 1;
+            e = arr[i];
+        }
+        else if(e == arr[i]){
+            c++;
+        }
+        else{
+            c--;
+        }
+    }
+
+// Checking if the stored element is the MAJORITY element:   MAJORITY CHECK
+       int cnt1 = 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == e) cnt1++;
+        }
+
+        if(cnt1 > (n / 2)){
+            return e;
+        }
+        else{
+            return -1;
+        }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<major(n,arr); 
+    return 0;
+} 
+ */
+// Majority check is NOT REQUIRED for LEETc soln as it has already mentioned that there's surely 1 majority element present in test cases
+// Ex: {1,2,3,4} this will returned e = 3 but it's not in majority so will return -1 instead using below code block of majority check 
+// Ex: {1,2,2,3} it will return -1 only for this also as 2 is occuring twice which means not greater than n/2 so 2 is also not a majority element here.
+ 
+
+
+
+                                        // LeetC - 169. Majority Element {Moore's Vote Algorithm}
+/* 
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int c = 0;
+        int e;
+        for(int i=0; i<nums.size(); i++){
+            if(c == 0){
+                c = 1;
+                e = nums[i];
+            }
+            else if(e == nums[i]){
+                c++;
+            }
+            else{
+                c--;
+            }
+        }
+        return e;
+    }
+}; 
+*/
+
+
+
+
+                                        // 19. Maximum Subarray Sum in an Array
+
+// Brute Force : 2 nested loops      T - O(n^2)  S - (1)           could be done using 3 loops also 
+/*
+#include<iostream>
+#include<string>
+using namespace std;
+int maxSum(int n, int arr[]){
+    int c1 = INT_MIN;                           // Don't take 0 as max sum could be -ve also
+    
+    for(int i=0; i<n; i++){
+        int sum = 0;
+        for(int j=i; j<n; j++){
+            sum += arr[j];
+            c1 = max(c1,sum); 
+        }
+    }
+    return c1;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<maxSum(n,arr); 
+    return 0;
+} 
+*/
+
+
+                                                        // LeetC - 53
+                                            // Kadane's Algo for Maximum Subarray Sum
+/*              T - O(N)    S - O(1)
+#include<iostream>
+#include<string>
+using namespace std;
+int maxSum(int n, int arr[]){
+    int sum = 0;
+    int Tsum = arr[0];
+
+    for(int i=1; i<n; i++){
+        sum += arr[i];
+        if(sum<0){
+            Tsum = max(sum, Tsum);
+            sum = 0;
+        }
+        else{
+            Tsum = max(sum, Tsum);
+        }
+    }
+    return Tsum;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    cout<<maxSum(n,arr);    
+    return 0;
+} */
+
+
+
+// More shorten code of above algo              T - O(N)    S - O(1)
+/*
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int maxSum(int n, int arr[]) {
+    int sum = arr[0];
+    int Tsum = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        sum = max(arr[i], sum + arr[i]);                    // either extend or restart
+        Tsum = max(Tsum, sum);
+    }
+    return Tsum;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    cout << maxSum(n, arr);
+    return 0;
+}
+*/
+
+
+
+                                        // Kadane's Algo if need to print subarray too
+/*                            
+#include<iostream>
+#include<string>
+using namespace std;
+void maxSum(int n, int arr[]){
+    int sum = 0;
+    int Tsum = arr[0];
+
+    int start = -1;
+    int end = -1;
+    int tempStart = 0;
+
+    for(int i=0; i<n; i++){
+        if(sum == 0){
+            tempStart = i;                      // Track the begining of subarray
+        }
+
+        sum += arr[i];
+
+        if(sum > Tsum) {
+            Tsum = sum;
+
+            start = tempStart;
+            end = i;
+        }
+
+        if(sum<0){
+            Tsum = max(sum, Tsum);
+            sum = 0;
+        }
+    }
+
+    cout<<Tsum<<endl;
+    for(int i=start; i<=end; i++){
+        cout<<arr[i]<<" ";
+    }
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    maxSum(n,arr);    
+    return 0;
+}
+ */
 
 
 
