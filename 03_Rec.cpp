@@ -5,7 +5,36 @@ Note :-
     * In Forward Recursion cout will be used before calling the recursive function.     
 */
 
-                                                    
+         
+
+/*                                       // Done by Oops :-  Recursive 'Function or Method' defined under some class and being accessed by creating object of that class
+#include<iostream>
+using namespace std;
+
+class Solution {
+public:
+    void printName(string name, int count, int N) {               // Defining a public method under class Solution 
+        if (count == N) return;                                   // Base case: if count equals N, stop recursion
+
+        cout << name << "\n";                                     // Print the name
+
+        printName(name, count + 1, N);                            // Recursive call with incremented count
+    }
+};
+
+int main() {
+    Solution sol;                                                 // Create object 'sol' of class 'Solution'
+    int N = 5;
+    string name = "Ashish";
+
+    sol.printName(name, 0, N);                                   // Use method 'printName' of class 'Solution'
+
+    return 0;
+}
+*/
+
+
+
                                                 //Reverse Count (n to 1)
 /* 
 #include<iostream>
@@ -55,8 +84,7 @@ void func(int i, int n){
    if(i>n) return;
    cout<<i<<endl;
 
-   // Function call to print i till i increments to n.
-   func(i+1,n);
+   func(i+1,n);                // Function call to print i & incrementing i upto n at each recursive call.
 }
 
 int main(){
@@ -74,21 +102,18 @@ int main(){
 #include<iostream>
 using namespace std;
 
-void func(int i){
+void func(int i, int n){
    
-   // Base Condition.
-   if(i<1) return;
+   if(n<i) return;                      // Base Condition.
    
-   // Function call to print (n-1) integers.
-   func(i-1);
-   cout<<i<<endl;
-
+   func(i,n-1);                         // Recursive call (go till base)
+   cout<<n<<endl;
 }
 
 int main(){
-  int n;
-  cin>>n;
-  func(n);
+  int i,n;
+  cin>>i>>n;
+  func(i,n);
   return 0;
 }
 */
@@ -106,7 +131,7 @@ int main(){
 #include<iostream>
 using namespace std;
 int sum(int n){
-    if(n==0) return 0;                      //Back Tracking :- At sum(2) it will gives 2 + sum(1)  similarly  At sum(1) it gives 2+1+sum(0)  but At Sum(0) it directly returns 0 and stop calling the Sum() funt and recursion stops 
+    if(n==0) return 0;                      //Back Tracking :- At sum(2) it will gives 2 + sum(1)  similarly  At sum(1) it gives 2+1+sum(0)  but At Sum(0) it directly returns 0 and stop calling the Sum() funt and recursion stops & backtracking starts
     return n + sum(n-1);
 }
 int main(){
@@ -129,11 +154,11 @@ int main(){
 #include<iostream>
 using namespace std;
 void fact(int i, int n){
-    if(i<1){                       //Base Condition tells if i gets less than 1 then terminate the recursive function and print fact
+    if(i<1){                       // Base Condition tells if i gets less than 1 then terminate the recursive function and print fact
         cout<<n;
         return;                    // if not return it will continue into loop again & again
     }
-    fact(i-1,n*i);                  // At i=0 it will return 1 instead of calling this recursive function
+    fact(i-1,n*i);                 // At i=0 it will return 1 instead of calling this recursive function
 }
 
 int main(){
@@ -256,13 +281,13 @@ int main(){
 /* 
 #include<iostream>
 using namespace std;
-void rev(int i, int n, int arr[]) {         // this is a void function which returns nothing, it just ,modifies the array by reversing it.
+void rev(int i, int n, int arr[]) {         // this is a void function which returns nothing, it just ,modifies the array by reversing it,  array comes under 'Reference by Address' so it's value can be updated from void function also.
     if (i >= n / 2) return;                 // stop when i reaches middle (Base Case, here return keyword is used to terminate the recursive funct.)
     swap(arr[i], arr[n - 1 - i]);
     rev(i + 1, n, arr);
 }
 int main(){
-    int i=0;                                //indexing will start from 0 always
+    int i=0;                                // indexing will start from 0 always
     int n;
     cin>>n;
     int arr[n];
@@ -279,7 +304,7 @@ int main(){
 
 
 
-//2nd way :-
+//2nd way :-                        // better than above
 /* 
 #include <iostream>
 using namespace std;
@@ -308,7 +333,7 @@ int main() {
     }
 
     rev(arr, 0, n - 1);                 // reverse array in-place
-    printArray(arr, n);                 // print only once after complete reversal
+    printArray(arr, n);                 // print only once after complete reversal as upper recursive fn is called 1st so will be completed fully before implementation of this fn
 }
  */
 
@@ -317,7 +342,7 @@ int main() {
 // Using library function (New Approach)   :-   reverse() is just a well-optimized two-pointer loop.
 /*
 #include <iostream>
-#include<algorithm>
+#include <algorithm>
 using namespace std;
 
 //Function to print array
@@ -529,7 +554,7 @@ int main(){
 using namespace std;
 void fib(int n){
     if (n >= 1) cout << 0 << " ";           // for any number greater than 1 it will print 0 first
-    if (n >= 2) cout << 1 << " ";           // // for any number greater than 2 it will print 0 first then will print 1 
+    if (n >= 2) cout << 1 << " ";           // for any number greater than 2 it will print 0 first then will print 1 
                                             // above 2 lines make the series start with 0,1 always
     int a = 0, b = 1;
     for (int i = 2; i < n; i++) {
@@ -606,4 +631,4 @@ int fib(int n) {
 // Space: O(n)
 
 
-// 3. Space-Optimized Iterative :-  Time: O(n) & Space: O(1)     {Code already written somewhere above}
+// 3. Space-Optimized Iterative :-  Time: O(n) & Space: O(1)     {1st method (iterative approach)}

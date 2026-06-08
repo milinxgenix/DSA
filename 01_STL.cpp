@@ -145,7 +145,7 @@ int main(){
 //Creating a reverse loop through iterator
         //vector<int> :: reverse_iterator it;           //instead of initializing it here we can put this into the bracket below where loop is created
         
-        //for(vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); it++){
+        //for(vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); it++){             // Here we r using "it++" not "it--" as reverse iterator moves backward
         //        cout<< *(it) <<" ";
         //}
         
@@ -251,7 +251,7 @@ int main(){
 /*
 #include<iostream>
 #include<vector>
-#inlcude<utility>
+#include<utility>
 using namespace std;
 
 int main(){
@@ -603,7 +603,13 @@ int main()
         m.emplace("tv",80);
 
 
-        auto rangeAC = m.equal_range("AC");              // Get all elements with key "AC"
+        auto rangeAC = m.equal_range("AC");              
+        
+// Get all elements with key "AC" : equal_range("AC") returns a pair of iterators
+// rangeAC.first → iterator to first element with key "AC"
+// rangeAC.second → iterator to one past the last element with key "AC"
+// range is:  [ rangeAC.first , rangeAC.second ]
+
 
         for (auto it = rangeAC.first; it != rangeAC.second; ++it) {
                 if (it->second == 5) {
@@ -618,7 +624,7 @@ int main()
 
         for (auto it = rangeTV.first; it != rangeTV.second; ) {
                 if (it->second == 80){                                          // it->second throws the value of "tv" key and check whether it's 80 or not               
-                        it = m.erase(it);             // returns next valid iterator
+                        it = m.erase(it);                                       // returns next valid iterator
                 }
                 else{
                         ++it;

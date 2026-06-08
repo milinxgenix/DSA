@@ -14,7 +14,7 @@ int main()
 
     for(int i=0; i<=n-2; i++){
         int min = i;
-        for(int j=i; j<=n-1; j++){
+        for(int j=i+1; j<=n-1; j++){
             if(arr[min]>arr[j]){
                 //swap(arr[min],arr[i]);      :- this leads to adjacent swapping don't do this
                 min = j;                      // find the minimest element first
@@ -124,10 +124,7 @@ void bubble_sort(int arr[], int n) {
     bool didSwap = false; 
     for (int j = 0; j <= n - 2; j++) {              // reference from iteration method :- "i = n-1" so "i-1 = n-2"  ;   j<=n-2
         if (arr[j] > arr[j + 1]) {
-            int temp = arr[j + 1];
-            arr[j + 1] = arr[j];
-            arr[j] = temp;
-
+            swap(arr[j],arr[j+1]);
             didSwap = true;
         }
     }
@@ -146,6 +143,8 @@ int main()
     }
 
     bubble_sort(arr, n);
+
+// print sorted array    
     for (int i = 0; i < n; i++) {
         cout << arr[i] << " ";
     }

@@ -85,11 +85,12 @@ int main()
 
 //Pre-computation:-
     int hash[257] = {0};                    //there's 256 ASCII characters 
+
     for(int i=0; i<s.size(); i++){
         hash[s[i]]++;                       //No need to subtract like above as 'a' will be at 96th index only having 97 as ascii value
     }
 
-    // for(char c : s){                     //Better to do looping like this instead
+    // for(char c : s){                     //Better to do looping like this instead   (better than above method)
     //     hash[c]++;
     // }
 
@@ -196,7 +197,9 @@ int main()
 
 
 
-                                    // Unordered map for Q1
+
+
+                                    // Unordered map for first questn (scroll at top 🔝)
 /*
 #include <iostream>
 #include <string>
@@ -357,12 +360,12 @@ vector<int> two_sum(vector<int>& nums, int target){
 
 
         // if(m.count(comp)){               // same thing can be done using count() method instead of find() method
-        //     return {m[comp], i};
+        //     return {m[comp], i};         // brace initialization '{}'
         // }
 
     }
 
-    return {}; // if No solution found (must need to be added or will throw error)
+    return {};                             // if No solution found (must need to be added or will throw error)
 }
 */
 

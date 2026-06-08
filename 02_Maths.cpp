@@ -132,8 +132,8 @@ int main(){
     }
 
     bool isPalindrome = true;
-    for(int i=0; i<v.size()/2; i++){
-        if(v[i]!=v[v.size()-1-i]){
+    for(int i=0; i<v.size()/2; i++){                // Dividing into halves and then compairing from begining & end 
+        if(v[i]!=v[v.size()-1-i]){                  // Can also use 2 pointers and do start==end that will be more efficient 
             isPalindrome = false;
         }
     }
@@ -353,7 +353,9 @@ int main()
 // Optimal Approach :- instead of iterating upto "n" go upto "sqrt(n)"
 /* 
 #include<iostream>
-#include<string>
+#include <vector>
+#include <cmath>
+#include <algorithm>
 using namespace std;
 int main()
 {
@@ -440,7 +442,7 @@ int main() {
     cin >> n1 >> n2;
 
     for (int j = n1; j <= n2; j++) {
-        if (j < 2) continue;           // 0 and 1 are not prime
+        if (j < 2) continue;                    // 0 and 1 are not prime
         
         bool isPrime = true;
         for (int i = 2; i * i <= j; i++) {
@@ -454,7 +456,6 @@ int main() {
             cout << j << ",";
         }
     }
-
     return 0;
 }
  */
