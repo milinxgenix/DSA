@@ -361,7 +361,7 @@ int main(){
         }
 
         Node* temp = head;
-        Node* prev;
+        Node* prev = NULL;
         int cnt = 0;
 
         while(temp){
