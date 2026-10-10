@@ -307,7 +307,7 @@ class Node{
         if(k==1){                                   // this will also handle if there's just 1 element in LL
             Node* temp = head;
             head = head->next;
-            free(temp);
+            delete temp;
             return head;
         }
 
